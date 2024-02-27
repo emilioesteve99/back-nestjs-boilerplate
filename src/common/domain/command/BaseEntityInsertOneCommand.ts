@@ -1,3 +1,1 @@
-export interface BaseEntityInsertOneCommand {
-  createdById: string;
-}
+export interface BaseEntityInsertOneCommand {}

@@ -43,7 +43,6 @@ ormconfig.json
 
 /config/
 /data
-/pgdata
 pnpm-lock.yaml
 .pnpm-store
 

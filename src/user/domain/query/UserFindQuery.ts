@@ -2,6 +2,7 @@ import { BaseEntitySortKeyAndOrderType } from '../../../common/domain/model/Base
 import { BaseEntityFindQuery } from '../../../common/domain/query/BaseEntityFindQuery';
 
 export class UserFindQuery implements BaseEntityFindQuery {
+  public readonly email: string | undefined = undefined;
   public readonly ids: string[] | undefined = undefined;
   public readonly sortKeyAndOrderTypes: BaseEntitySortKeyAndOrderType[] | undefined = undefined;
 

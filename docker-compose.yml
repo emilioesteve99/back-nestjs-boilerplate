@@ -10,8 +10,7 @@ services:
     ports:
       - ${DB_PORT}:5432
     volumes:
-      - ./pgdata:/var/lib/postgresql/data
-    user: "1000"
+      - ./data/postgresql:/var/lib/postgresql/data
 
   api:
     build:

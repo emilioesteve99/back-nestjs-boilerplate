@@ -6,6 +6,7 @@ import { ExplorerService } from '@nestjs/cqrs/dist/services/explorer.service';
 
 import { AppController } from './AppController';
 import { AppHttpExceptionFilter } from './AppHttpExceptionFilter';
+import { AuthModule } from './auth/infrastructure/injection/AuthModule';
 import { DatabaseConfig } from './config/infrastructure/database/DatabaseConfig';
 import { getMikroOrmModuleOptions } from './config/infrastructure/database/getMikroOrmModuleOptions';
 import { AppConfigModule } from './config/infrastructure/injection/AppConfigModule';
@@ -16,6 +17,7 @@ import { UserModule } from './user/infrastructure/injection/UserModule';
   controllers: [AppController],
   imports: [
     AppConfigModule,
+    AuthModule,
     CqrsModule,
     MikroOrmModule.forRootAsync({
       imports: [DatabaseConfigModule],

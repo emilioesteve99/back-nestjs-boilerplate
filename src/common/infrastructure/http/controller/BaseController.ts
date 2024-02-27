@@ -1,27 +1,20 @@
-import { ConflictException, Injectable } from '@nestjs/common';
-import { IQuery, QueryBus } from '@nestjs/cqrs';
+import { Injectable } from '@nestjs/common';
+import { QueryBus } from '@nestjs/cqrs';
 
 import { EntityNotFoundException } from '../../../domain/exception/EntityNotFoundException';
+import { AnyEntityFindOneQuery } from '../../../domain/query/AnyEntityFindOneQuery';
 
 @Injectable()
 export class BaseController {
   public constructor(protected readonly queryBus: QueryBus) {}
 
-  protected async findOneOrThrowEntityNotFoundException<TEntity>(query: IQuery, message?: string): Promise<TEntity> {
+  protected async findOneOrThrowException<TEntity>(query: AnyEntityFindOneQuery, exception?: Error): Promise<TEntity> {
     const entity: TEntity | undefined = await this.queryBus.execute(query);
 
     if (entity === undefined) {
-      throw new EntityNotFoundException(message ?? 'Entity not found exception');
+      throw exception ?? new EntityNotFoundException('Entity not found exception');
     }
 
     return entity;
-  }
-
-  protected async findOneAndThrowConflictExceptionException<TEntity>(query: IQuery, message?: string): Promise<void> {
-    const entity: TEntity | undefined = await this.queryBus.execute(query);
-
-    if (entity !== undefined) {
-      throw new ConflictException(message ?? 'Conflict exception');
-    }
   }
 }

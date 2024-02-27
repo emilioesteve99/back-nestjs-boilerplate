@@ -1,12 +1,12 @@
 import { Inject } from '@nestjs/common';
-import { CommandHandler } from '@nestjs/cqrs';
+import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 
 import { ManagerAsync } from '../../../common/domain/manager/ManagerAsync';
 import { SignAuthTokenCommand } from '../../domain/command/SignAuthTokenCommand';
 import { SignAuthTokenManager } from '../../domain/manager/SignAuthTokenManager';
 
 @CommandHandler(SignAuthTokenCommand)
-export class SignAuthTokenCommandHandler {
+export class SignAuthTokenCommandHandler implements ICommandHandler<SignAuthTokenCommand, string> {
   public constructor(
     @Inject(SignAuthTokenManager)
     private readonly signAuthTokenManager: ManagerAsync<SignAuthTokenCommand, string>,

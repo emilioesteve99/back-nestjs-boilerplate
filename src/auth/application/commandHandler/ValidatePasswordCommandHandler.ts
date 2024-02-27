@@ -6,7 +6,7 @@ import { ValidatePasswordCommand } from '../../domain/command/ValidatePasswordCo
 import { ValidatePasswordManager } from '../../domain/manager/ValidatePasswordManager';
 
 @CommandHandler(ValidatePasswordCommand)
-export class ValidatePasswordCommandHandler implements ICommandHandler<ValidatePasswordCommand> {
+export class ValidatePasswordCommandHandler implements ICommandHandler<ValidatePasswordCommand, boolean> {
   public constructor(
     @Inject(ValidatePasswordManager)
     private readonly validatePasswordManager: ManagerAsync<ValidatePasswordCommand, boolean>,

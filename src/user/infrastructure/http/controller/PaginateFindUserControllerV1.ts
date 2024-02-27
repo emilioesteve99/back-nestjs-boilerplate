@@ -3,6 +3,7 @@ import { QueryBus } from '@nestjs/cqrs';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 
 import { BaseUserController } from './BaseUserController';
+import { AuthGuard } from '../../../../auth/infrastructure/http/guard/AuthGuard';
 import { Pagination } from '../../../../common/domain/model/Pagination';
 import { ApiOkPaginationResponse } from '../../../../common/infrastructure/http/decorator/ApiOkPaginationResponse';
 import { User } from '../../../domain/model/User';
@@ -26,6 +27,7 @@ export class PaginateFindUserControllerV1 extends BaseUserController {
     description: 'Returns a paginated list of users',
     type: UserHttpV1,
   })
+  @AuthGuard()
   @Version('1')
   @Get()
   public async find(@Query() query: PaginateFindUserHttpV1): Promise<Pagination<User>> {

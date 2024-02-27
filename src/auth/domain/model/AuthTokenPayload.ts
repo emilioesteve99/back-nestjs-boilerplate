@@ -1,6 +1,5 @@
+import { AuthTokenPayloadUser } from './AuthTokenPayloadUser';
+
 export interface AuthTokenPayload {
-  user: {
-    email: string;
-    id: string;
-  };
+  user: AuthTokenPayloadUser;
 }

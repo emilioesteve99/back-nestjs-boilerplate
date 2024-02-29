@@ -34,6 +34,10 @@ export abstract class BaseEntitySortKeyAndOrderTypeToBaseEntityQueryOrderMapMikr
       baseEntityQueryOrderMapMikroOrm.id = this.orderTypeToQueryOrderMikroOrmConverter.convert(input.id);
     }
 
+    if (input.updatedAt !== undefined) {
+      baseEntityQueryOrderMapMikroOrm.updatedAt = this.orderTypeToQueryOrderMikroOrmConverter.convert(input.updatedAt);
+    }
+
     return baseEntityQueryOrderMapMikroOrm;
   }
 

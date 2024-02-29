@@ -2,6 +2,7 @@ import { defineConfig } from 'vitest/config';
 
 const config = defineConfig({
   test: {
+    globals: true,
     dir: 'src',
     include: ['**/*.spec.ts'],
     disableConsoleIntercept: true,
@@ -9,7 +10,14 @@ const config = defineConfig({
       enabled: false,
       provider: 'v8',
       include: ['**/src/**'],
-      exclude: ['**/fixtures/**', '**/model/**', '**/injection/**', '**/AppModule.ts', '**/main.ts'],
+      exclude: [
+        '**/fixtures/**',
+        '**/model/**',
+        '**/injection/**',
+        '**/AppModule.ts',
+        '**/main.ts',
+        '**/migrations/**'
+      ],
       reportsDirectory: 'coverage',
       // TODO: Change thresholds to 90% when we have more tests
       thresholds: {

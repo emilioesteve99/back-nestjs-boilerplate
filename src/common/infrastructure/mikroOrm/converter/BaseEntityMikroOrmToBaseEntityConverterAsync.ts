@@ -22,6 +22,7 @@ export abstract class BaseEntityMikroOrmToBaseEntityConverterAsync<
     const output: BaseEntity = {
       createdAt: input.createdAt,
       id: input.id,
+      updatedAt: input.updatedAt,
     };
 
     return output;

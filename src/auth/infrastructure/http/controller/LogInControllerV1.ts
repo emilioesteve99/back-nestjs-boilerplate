@@ -23,7 +23,7 @@ export class LogInControllerV1 extends BaseController {
   @Version('1')
   @Post('log-ins')
   public async logIn(@Body() body: LoginHttpV1): Promise<LoginResponseHttpV1> {
-    const user: User = await this.findOneOrThrowException(
+    const user: User = await this.findOneOrThrowHttpException(
       new UserFindOneQuery({
         email: body.email,
       }),

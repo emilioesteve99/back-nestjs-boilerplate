@@ -1,5 +1,3 @@
-import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest';
-
 import { AppController } from './AppController';
 
 describe(AppController.name, () => {
@@ -9,19 +7,21 @@ describe(AppController.name, () => {
     appController = new AppController();
   });
 
-  describe(AppController.prototype.status.name, () => {
-    let result: string;
+  describe('.status()', () => {
+    describe('when called', () => {
+      let result: string;
 
-    beforeAll(() => {
-      result = appController.status();
-    });
+      beforeAll(() => {
+        result = appController.status();
+      });
 
-    afterAll(() => {
-      vi.clearAllMocks();
-    });
+      afterAll(() => {
+        vi.clearAllMocks();
+      });
 
-    it('should return "ok"', () => {
-      expect(result).toBe('ok');
+      it('should return "ok"', () => {
+        expect(result).toBe('ok');
+      });
     });
   });
 });

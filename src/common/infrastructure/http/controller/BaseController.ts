@@ -1,14 +1,17 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 
 import { EntityNotFoundException } from '../../../domain/exception/EntityNotFoundException';
 import { AnyEntityFindOneQuery } from '../../../domain/query/AnyEntityFindOneQuery';
 
 @Injectable()
-export class BaseController {
+export abstract class BaseController {
   public constructor(protected readonly queryBus: QueryBus) {}
 
-  protected async findOneOrThrowException<TEntity>(query: AnyEntityFindOneQuery, exception?: Error): Promise<TEntity> {
+  protected async findOneOrThrowHttpException<TEntity>(
+    query: AnyEntityFindOneQuery,
+    exception?: HttpException,
+  ): Promise<TEntity> {
     const entity: TEntity | undefined = await this.queryBus.execute(query);
 
     if (entity === undefined) {

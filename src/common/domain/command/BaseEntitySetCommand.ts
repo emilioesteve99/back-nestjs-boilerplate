@@ -1,3 +1,1 @@
-export interface BaseEntitySetCommand {
-  updatedById: string;
-}
+export interface BaseEntitySetCommand {}

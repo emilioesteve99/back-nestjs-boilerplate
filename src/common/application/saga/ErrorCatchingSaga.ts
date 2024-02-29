@@ -1,6 +1,6 @@
 import { Inject, Logger } from '@nestjs/common';
 import { ICommand, IEvent, Saga } from '@nestjs/cqrs';
-// import apm from 'elastic-apm-node';
+import { captureError } from 'elastic-apm-node';
 import { catchError, Observable } from 'rxjs';
 
 import { TypedMethodDecorator } from '../../domain/decorator/TypedMethodDecorator';
@@ -27,7 +27,7 @@ export function ErrorCatchingSaga<
       return method.apply(this, [input]).pipe(
         catchError((error: Error) => {
           this.logger.error(error.message);
-          // apm.captureError(error);
+          captureError(error);
           return [];
         }),
       ) as TOutput;

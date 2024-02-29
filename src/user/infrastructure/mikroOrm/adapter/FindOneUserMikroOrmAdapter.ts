@@ -12,7 +12,7 @@ import { UserMikroOrmToUserConverterAsync } from '../converter/UserMikroOrmToUse
 import { UserMikroOrm } from '../model/UserMikroOrm';
 
 @Injectable()
-export class FindOneUserMikroOrmAdapter extends FindOneMikroOrmAdapter<UserFindOneQuery, User, UserMikroOrm> {
+export class FindOneUserMikroOrmAdapter extends FindOneMikroOrmAdapter<UserFindOneQuery, UserMikroOrm, User> {
   public constructor(
     @InjectRepository(UserMikroOrm)
     userMikroOrmRepository: EntityRepository<UserMikroOrm>,

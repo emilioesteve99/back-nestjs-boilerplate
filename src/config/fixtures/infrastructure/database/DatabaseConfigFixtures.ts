@@ -7,7 +7,6 @@ export class DatabaseConfigFixtures {
       host: 'HOST',
       password: 'PASSWORD',
       port: 1234,
-      readReplicaHosts: ['REPLICA-HOST'],
       user: 'USER',
     };
 

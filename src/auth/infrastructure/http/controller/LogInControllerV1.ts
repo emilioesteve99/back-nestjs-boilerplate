@@ -6,13 +6,11 @@ import { User } from '../../../../user/domain/model/User';
 import { UserFindOneQuery } from '../../../../user/domain/query/UserFindOneQuery';
 import { SignAuthTokenCommand } from '../../../domain/command/SignAuthTokenCommand';
 import { ValidatePasswordCommand } from '../../../domain/command/ValidatePasswordCommand';
-import { LoginHttpV1 } from '../model/LoginHttpV1';
-import { LoginResponseHttpV1 } from '../model/LoginResponseHttpV1';
+import { LogInHttpV1 } from '../model/LogInHttpV1';
+import { LogInResponseHttpV1 } from '../model/LogInResponseHttpV1';
 
 @Controller('auth')
 export class LogInControllerV1 extends BaseController {
-  private readonly unauthorizedException: UnauthorizedException = new UnauthorizedException('Invalid credentials');
-
   public constructor(
     private readonly commandBus: CommandBus,
     queryBus: QueryBus,
@@ -22,12 +20,12 @@ export class LogInControllerV1 extends BaseController {
 
   @Version('1')
   @Post('log-ins')
-  public async logIn(@Body() body: LoginHttpV1): Promise<LoginResponseHttpV1> {
+  public async logIn(@Body() body: LogInHttpV1): Promise<LogInResponseHttpV1> {
     const user: User = await this.findOneOrThrowHttpException(
       new UserFindOneQuery({
         email: body.email,
       }),
-      this.unauthorizedException,
+      new UnauthorizedException(),
     );
 
     const isValidPassword: boolean = await this.commandBus.execute(
@@ -38,7 +36,7 @@ export class LogInControllerV1 extends BaseController {
     );
 
     if (!isValidPassword) {
-      throw this.unauthorizedException;
+      throw new UnauthorizedException();
     }
 
     const token: string = await this.commandBus.execute(
@@ -52,7 +50,7 @@ export class LogInControllerV1 extends BaseController {
       }),
     );
 
-    const response: LoginResponseHttpV1 = {
+    const response: LogInResponseHttpV1 = {
       token,
     };
 

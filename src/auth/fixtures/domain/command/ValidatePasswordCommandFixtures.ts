@@ -3,8 +3,8 @@ import { ValidatePasswordCommand } from '../../../domain/command/ValidatePasswor
 export class ValidatePasswordCommandFixtures {
   public static get any(): ValidatePasswordCommand {
     const validatePasswordCommand: ValidatePasswordCommand = {
-      actualPassword: 'anyActualPassword',
-      passwordToTry: 'anyPasswordToTry',
+      actualPassword: 'password-example',
+      passwordToTry: 'password-example',
     };
 
     return validatePasswordCommand;

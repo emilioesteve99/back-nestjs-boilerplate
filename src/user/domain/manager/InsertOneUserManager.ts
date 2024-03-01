@@ -23,7 +23,8 @@ export class InsertOneUserManager extends InsertOneManager<UserInsertOneCommand,
     const encryptedPassword: string = await this.encryptUserPasswordAdapter.encrypt(command);
 
     const userInsertOneCommand: UserInsertOneCommand = new UserInsertOneCommand({
-      ...command,
+      email: command.email,
+      name: command.name,
       password: encryptedPassword,
     });
 

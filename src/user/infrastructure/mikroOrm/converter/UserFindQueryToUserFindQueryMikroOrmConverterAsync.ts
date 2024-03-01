@@ -19,9 +19,7 @@ export class UserFindQueryToUserFindQueryMikroOrmConverterAsync extends BaseEnti
       ...(baseEntityFindQueryMikroOrm as ObjectQuery<UserMikroOrm>),
     };
 
-    if (input.email !== undefined) {
-      userFindQueryMikroOrm.email = input.email;
-    }
+    this.setPropertyIfNotUndefined(input, userFindQueryMikroOrm, 'email', 'email');
 
     return userFindQueryMikroOrm;
   }

@@ -13,7 +13,7 @@ export class JwtAuthGuard implements CanActivate {
     const request: FastifyRequest = context.switchToHttp().getRequest();
     const token: string | undefined = this.extractTokenFromHeader(request);
 
-    if (token === undefined) {
+    if (token === undefined || token.trim() === '') {
       throw new UnauthorizedException();
     }
 
@@ -34,7 +34,7 @@ export class JwtAuthGuard implements CanActivate {
   }
 
   private extractTokenFromHeader(request: FastifyRequest): string | undefined {
-    const [type, token] = request.headers.authorization?.split(' ') ?? [];
-    return type === 'Bearer' ? token : undefined;
+    const [, token] = request.headers.authorization?.split('Bearer ') ?? [];
+    return token;
   }
 }

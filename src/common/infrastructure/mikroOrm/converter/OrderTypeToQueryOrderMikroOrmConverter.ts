@@ -6,22 +6,17 @@ import { OrderType } from '../../../domain/model/OrderType';
 
 @Injectable()
 export class OrderTypeToQueryOrderMikroOrmConverter implements Converter<OrderType, QueryOrder> {
-  public convert(input: OrderType): QueryOrder {
-    let queryOrder: QueryOrder;
+  private readonly orderTypeQueryOrderMap: Map<OrderType, QueryOrder> = new Map([
+    [OrderType.ASC, QueryOrder.ASC],
+    [OrderType.ASC_NULLS_FIRST, QueryOrder.ASC_NULLS_FIRST],
+    [OrderType.ASC_NULLS_LAST, QueryOrder.ASC_NULLS_LAST],
+    [OrderType.DESC, QueryOrder.DESC],
+    [OrderType.DESC_NULLS_FIRST, QueryOrder.DESC_NULLS_FIRST],
+    [OrderType.DESC_NULLS_LAST, QueryOrder.DESC_NULLS_LAST],
+  ]);
 
-    if (input === OrderType.ASC) {
-      queryOrder = QueryOrder.ASC;
-    } else if (input === OrderType.ASC_NULLS_FIRST) {
-      queryOrder = QueryOrder.ASC_NULLS_FIRST;
-    } else if (input === OrderType.ASC_NULLS_LAST) {
-      queryOrder = QueryOrder.ASC_NULLS_LAST;
-    } else if (input === OrderType.DESC) {
-      queryOrder = QueryOrder.DESC;
-    } else if (input === OrderType.DESC_NULLS_FIRST) {
-      queryOrder = QueryOrder.DESC_NULLS_FIRST;
-    } else {
-      queryOrder = QueryOrder.DESC_NULLS_LAST;
-    }
+  public convert(input: OrderType): QueryOrder {
+    const queryOrder: QueryOrder = this.orderTypeQueryOrderMap.get(input)!;
 
     return queryOrder;
   }

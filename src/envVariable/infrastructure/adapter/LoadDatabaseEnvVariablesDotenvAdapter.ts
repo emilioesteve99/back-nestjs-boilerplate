@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
-import { LoadDataDotenvAdapter } from '../../../env/infrastructure/dotenv/adapter/LoadDotenvAdapter';
+import { LoadDataDotenvAdapter } from '../../../env/infrastructure/dotenv/adapter/LoadDataDotenvAdapter';
 import { DatabaseEnvVariables } from '../../domain/model/DatabaseEnvVariables';
 import { databaseEnvVariablesToEnvVariablesValidatorEnvalidMap } from '../envalid/model/databaseEnvVariablesToEnvVariablesValidatorEnvalidMap';
 

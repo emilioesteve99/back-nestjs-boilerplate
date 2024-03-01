@@ -16,7 +16,8 @@ const config = defineConfig({
         '**/injection/**',
         '**/AppModule.ts',
         '**/main.ts',
-        '**/migrations/**'
+        '**/migrations/**',
+        '**/MikroOrmCliConfig.ts',
       ],
       reportsDirectory: 'coverage',
       // TODO: Change thresholds to 90% when we have more tests

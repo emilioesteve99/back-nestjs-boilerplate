@@ -6,34 +6,4 @@ export class OrderTypeFixtures {
 
     return orderType;
   }
-
-  public static get ASC_NULLS_FIRST(): OrderType {
-    const orderType: OrderType = OrderType.ASC_NULLS_FIRST;
-
-    return orderType;
-  }
-
-  public static get ASC_NULLS_LAST(): OrderType {
-    const orderType: OrderType = OrderType.ASC_NULLS_LAST;
-
-    return orderType;
-  }
-
-  public static get DESC(): OrderType {
-    const orderType: OrderType = OrderType.DESC;
-
-    return orderType;
-  }
-
-  public static get DESC_NULLS_FIRST(): OrderType {
-    const orderType: OrderType = OrderType.DESC_NULLS_FIRST;
-
-    return orderType;
-  }
-
-  public static get DESC_NULLS_LAST(): OrderType {
-    const orderType: OrderType = OrderType.DESC_NULLS_LAST;
-
-    return orderType;
-  }
 }

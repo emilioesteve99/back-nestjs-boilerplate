@@ -1,6 +1,5 @@
-name: unit testing
+name: unit tests
 
-# trigger build when pushing, or when creating a pull request
 on:
   push:
     branches:

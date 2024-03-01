@@ -1,4 +1,3 @@
-import { ConnectionOptions } from '@mikro-orm/core/utils/Configuration';
 import { MikroOrmModuleOptions } from '@mikro-orm/nestjs';
 
 import { DatabaseConfig } from './DatabaseConfig';
@@ -16,12 +15,6 @@ export function getMikroOrmModuleOptions(databaseConfig: DatabaseConfig): MikroO
     },
     password: databaseConfig.password,
     port: databaseConfig.port,
-    preferReadReplicas: true,
-    replicas: [].map(
-      (host: string): Partial<ConnectionOptions> => ({
-        host,
-      }),
-    ),
     type: 'postgresql',
     user: databaseConfig.user,
   };

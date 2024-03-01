@@ -10,7 +10,9 @@ export class UserMikroOrmToUserConverterAsync extends BaseEntityMikroOrmToBaseEn
   protected async convertToSpecificEntity(input: UserMikroOrm, baseEntity: BaseEntity): Promise<User> {
     const user: User = {
       ...baseEntity,
+      email: input.email,
       name: input.name,
+      password: input.password,
     };
 
     return user;

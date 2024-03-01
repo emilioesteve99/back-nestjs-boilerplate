@@ -1,0 +1,40 @@
+name: Create Release
+
+on: workflow_dispatch
+
+jobs:
+  create-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20.9.0
+      - name: Install global necessary dependencies
+        run: |
+          npm install -g conventional-changelog-cli standard-version
+      - name: 'Setup jq'
+        uses: dcarbone/install-jq-action@v2
+        with:
+          version: 1.7
+          force: true
+      - name: Install standard-version
+        run: npm install -g standard-version
+      - name: Commit changelog updated and tag created
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config --local user.email "actions@users.noreply.github.com"
+          git config --local user.name "Actions Bot"
+          changelog=$(conventional-changelog -p conventionalcommits)
+          echo "$changelog" > CHANGELOG.md
+          standard-version -t ""  --no-verify
+          VERSION=$(jq -r .version package.json)
+          git fetch --all
+          git checkout main
+          git add CHANGELOG.md package.json
+          git commit --amend --no-verify --no-edit
+          git push --tags --no-verify
+          git push --no-verify
+          gh release create $VERSION -F CHANGELOG.md --draft=false

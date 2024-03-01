@@ -1,6 +1,6 @@
 import { Transform, TransformFnParams } from 'class-transformer';
 
-import { normalizePhoneTransform } from './normalizePhoneTransform';
+import { normalizePhoneTransform } from '../transform/normalizePhoneTransform';
 
 export function NormalizePhone(): PropertyDecorator {
   return Transform((params: TransformFnParams): string => normalizePhoneTransform(params));

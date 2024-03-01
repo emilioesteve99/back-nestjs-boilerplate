@@ -12,12 +12,14 @@ export class UserFindQueryToUserFindQueryMikroOrmConverterAsync extends BaseEnti
   ObjectQuery<UserMikroOrm>
 > {
   protected override async convertToSpecificEntityFindQueryMikroOrm(
-    _input: UserFindQuery,
+    input: UserFindQuery,
     baseEntityFindQueryMikroOrm: ObjectQuery<BaseEntityMikroOrm>,
   ): Promise<ObjectQuery<UserMikroOrm>> {
     const userFindQueryMikroOrm: ObjectQuery<UserMikroOrm> = {
       ...(baseEntityFindQueryMikroOrm as ObjectQuery<UserMikroOrm>),
     };
+
+    this.setPropertyIfNotUndefined(input, userFindQueryMikroOrm, 'email', 'email');
 
     return userFindQueryMikroOrm;
   }

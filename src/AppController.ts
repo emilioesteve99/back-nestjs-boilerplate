@@ -6,6 +6,6 @@ import { ApiExcludeController } from '@nestjs/swagger';
 export class AppController {
   @Get()
   public status(): string {
-    return 'ok';
+    return 'okk';
   }
 }

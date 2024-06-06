@@ -19,8 +19,8 @@ describe(AppController.name, () => {
         vi.clearAllMocks();
       });
 
-      it('should return "ok"', () => {
-        expect(result).toBe('ok');
+      it('should return "okk"', () => {
+        expect(result).toBe('okk');
       });
     });
   });

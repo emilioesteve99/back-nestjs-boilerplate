@@ -2,20 +2,20 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export abstract class BaseEntityHttpV1 {
   @ApiProperty()
-  createdAt!: Date;
+  public createdAt!: Date;
 
   @ApiProperty({ format: 'uuid' })
-  id!: string;
+  public id!: string;
 
   @ApiPropertyOptional()
-  updatedAt?: Date;
+  public updatedAt?: Date;
 
   @ApiProperty({ format: 'uuid' })
-  createdById!: string;
+  public createdById!: string;
 
   @ApiPropertyOptional({ format: 'uuid' })
-  updatedById?: string;
+  public updatedById?: string;
 
   @ApiProperty()
-  version!: number;
+  public version!: number;
 }

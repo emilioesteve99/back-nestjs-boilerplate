@@ -1,8 +1,7 @@
 import { EntityRepository, ObjectQuery } from '@mikro-orm/core';
 import { Mocked } from 'vitest';
-
-import { CountMikroOrmAdapter } from './CountMikroOrmAdapter';
 import { ConverterAsync } from '../../../domain/converter/ConverterAsync';
+import { CountMikroOrmAdapter } from './CountMikroOrmAdapter';
 
 interface QueryTest {
   foo: any;
@@ -17,7 +16,7 @@ describe(CountMikroOrmAdapter.name, () => {
   let countQueryToFindQueryMikroOrmConverterAsyncMock: Mocked<ConverterAsync<QueryTest, ObjectQuery<ModelTest>>>;
   let countMikroOrmAdapter: CountMikroOrmAdapter<QueryTest, ModelTest>;
 
-  beforeAll(() => {
+  beforeEach(() => {
     entityRepositoryMock = {
       count: vi.fn(),
     } as Partial<Mocked<EntityRepository<ModelTest>>> as Mocked<EntityRepository<ModelTest>>;
@@ -39,7 +38,7 @@ describe(CountMikroOrmAdapter.name, () => {
       let countResultFixture: number;
       let result: unknown;
 
-      beforeAll(async () => {
+      beforeEach(async () => {
         queryTestFixture = {
           foo: 'foo',
         };
@@ -55,7 +54,7 @@ describe(CountMikroOrmAdapter.name, () => {
         result = await countMikroOrmAdapter.count(queryTestFixture);
       });
 
-      afterAll(() => {
+      afterEach(() => {
         vi.clearAllMocks();
       });
 

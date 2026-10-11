@@ -1,11 +1,10 @@
 import { ObjectQuery } from '@mikro-orm/core';
 import { Mock } from 'vitest';
-
-import { BaseEntityDeleteCommandToBaseEntityDeleteQueryMikroOrmConverterAsync } from './BaseEntityDeleteCommandToBaseEntityDeleteQueryMikroOrmConverterAsync';
 import { BaseEntityDeleteCommand } from '../../../domain/command/BaseEntityDeleteCommand';
 import { BaseEntityDeleteCommandFixtures } from '../../../fixtures/domain/command/BaseEntityDeleteCommandFixtures';
 import { BaseEntityDeleteQueryMikroOrmFixtures } from '../../../fixtures/infrastructure/mikroOrm/command/BaseEntityDeleteQueryMikroOrmFixtures';
 import { BaseEntityMikroOrm } from '../model/BaseEntityMikroOrm';
+import { BaseEntityDeleteCommandToBaseEntityDeleteQueryMikroOrmConverterAsync } from './BaseEntityDeleteCommandToBaseEntityDeleteQueryMikroOrmConverterAsync';
 
 class BaseEntityDeleteCommandToBaseEntityDeleteQueryMikroOrmConverterAsyncTest extends BaseEntityDeleteCommandToBaseEntityDeleteQueryMikroOrmConverterAsync<
   BaseEntityDeleteCommand,
@@ -13,8 +12,7 @@ class BaseEntityDeleteCommandToBaseEntityDeleteQueryMikroOrmConverterAsyncTest e
 > {
   public constructor(
     private readonly convertToEntityDeleteQueryMikroOrmMock: Mock<
-      [BaseEntityDeleteCommand, ObjectQuery<BaseEntityMikroOrm>],
-      Promise<ObjectQuery<BaseEntityMikroOrm>>
+      (...args: [BaseEntityDeleteCommand, ObjectQuery<BaseEntityMikroOrm>]) => Promise<ObjectQuery<BaseEntityMikroOrm>>
     >,
   ) {
     super();
@@ -30,12 +28,11 @@ class BaseEntityDeleteCommandToBaseEntityDeleteQueryMikroOrmConverterAsyncTest e
 
 describe(BaseEntityDeleteCommandToBaseEntityDeleteQueryMikroOrmConverterAsync.name, () => {
   let convertToEntityDeleteQueryMikroOrmMock: Mock<
-    [BaseEntityDeleteCommand, ObjectQuery<BaseEntityMikroOrm>],
-    Promise<ObjectQuery<BaseEntityMikroOrm>>
+    (...args: [BaseEntityDeleteCommand, ObjectQuery<BaseEntityMikroOrm>]) => Promise<ObjectQuery<BaseEntityMikroOrm>>
   >;
   let baseEntityDeleteCommandToBaseEntityDeleteQueryMikroOrmConverterAsync: BaseEntityDeleteCommandToBaseEntityDeleteQueryMikroOrmConverterAsyncTest;
 
-  beforeAll(() => {
+  beforeEach(() => {
     convertToEntityDeleteQueryMikroOrmMock = vi.fn();
 
     baseEntityDeleteCommandToBaseEntityDeleteQueryMikroOrmConverterAsync =
@@ -50,18 +47,19 @@ describe(BaseEntityDeleteCommandToBaseEntityDeleteQueryMikroOrmConverterAsync.na
       let baseEntityDeleteQueryMikroOrmFixture: ObjectQuery<BaseEntityMikroOrm>;
       let result: unknown;
 
-      beforeAll(async () => {
+      beforeEach(async () => {
         baseEntityDeleteCommandFixture = BaseEntityDeleteCommandFixtures.withId;
         baseEntityDeleteQueryMikroOrmFixture = BaseEntityDeleteQueryMikroOrmFixtures.withId;
 
         convertToEntityDeleteQueryMikroOrmMock.mockResolvedValueOnce(baseEntityDeleteQueryMikroOrmFixture);
 
-        result = await baseEntityDeleteCommandToBaseEntityDeleteQueryMikroOrmConverterAsync.convert(
-          baseEntityDeleteCommandFixture,
-        );
+        result =
+          await baseEntityDeleteCommandToBaseEntityDeleteQueryMikroOrmConverterAsync.convert(
+            baseEntityDeleteCommandFixture,
+          );
       });
 
-      afterAll(() => {
+      afterEach(() => {
         vi.clearAllMocks();
       });
 

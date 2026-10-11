@@ -9,7 +9,7 @@ describe(parseBooleanTransform.name, () => {
     let transformFnParamsFixture: TransformFnParams;
     let result: unknown;
 
-    beforeAll(async () => {
+    beforeEach(async () => {
       key = 'boolean';
       transformFnParamsFixture = {
         key,
@@ -25,7 +25,7 @@ describe(parseBooleanTransform.name, () => {
       }
     });
 
-    afterAll(() => {
+    afterEach(() => {
       vi.clearAllMocks();
     });
 
@@ -41,7 +41,7 @@ describe(parseBooleanTransform.name, () => {
     let transformFnParamsFixture: TransformFnParams;
     let result: unknown;
 
-    beforeAll(async () => {
+    beforeEach(async () => {
       key = 'boolean';
       valueFixture = true;
       transformFnParamsFixture = {
@@ -54,7 +54,7 @@ describe(parseBooleanTransform.name, () => {
       result = parseBooleanTransform(transformFnParamsFixture);
     });
 
-    afterAll(() => {
+    afterEach(() => {
       vi.clearAllMocks();
     });
 

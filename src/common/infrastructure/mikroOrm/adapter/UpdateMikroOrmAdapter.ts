@@ -34,14 +34,17 @@ export class UpdateMikroOrmAdapter<TCommand, TModelDb extends AnyEntity> impleme
       const modelsDb: TModelDb[] = await this.entityRepository.find(findQueryMikroOrm);
 
       for (const modelDb of modelsDb) {
-        modelsDbUpdated.push(this.entityRepository.assign(modelDb, setQueryMikroOrm, { mergeObjects: false }));
+        modelsDbUpdated.push(
+          this.entityRepository.assign(modelDb, setQueryMikroOrm as any, { mergeObjectProperties: false }),
+        );
       }
     }
 
     const entityManager: EntityManager = this.entityRepository.getEntityManager();
 
     try {
-      await entityManager.persistAndFlush(modelsDbUpdated);
+      entityManager.persist(modelsDbUpdated);
+      await entityManager.flush();
     } catch (error: unknown) {
       if (isPostgreSqlErrorWithErrorType(error, [PostgreSqlErrorType.FOREIGN_KEY_VIOLATION])) {
         throw new InvalidArgumentException('Foreign key violation');

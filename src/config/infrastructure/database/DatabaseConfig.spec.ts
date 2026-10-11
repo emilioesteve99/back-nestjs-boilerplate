@@ -1,37 +1,46 @@
-import { Mocked } from 'vitest';
-
 import { DatabaseConfig } from './DatabaseConfig';
-import { LoadDataAdapter } from '../../../env/domain/adapter/LoadDataAdapter';
-import { DatabaseEnvVariables } from '../../../envVariable/domain/model/DatabaseEnvVariables';
-import { DatabaseEnvVariablesFixtures } from '../../../envVariable/fixtures/domain/model/DatabaseEnvVariablesFixtures';
 
 describe(DatabaseConfig.name, () => {
   describe('when instantiated', () => {
-    let databaseEnvVariablesFixture: DatabaseEnvVariables;
-    let loadDatabaseEnvVariablesAdapter: Mocked<LoadDataAdapter<DatabaseEnvVariables>>;
+    let databaseFixture: string;
+    let hostFixture: string;
+    let passwordFixture: string;
+    let portFixture: number;
+    let userFixture: string;
     let databaseConfig: DatabaseConfig;
 
-    beforeAll(() => {
-      databaseEnvVariablesFixture = DatabaseEnvVariablesFixtures.any;
-      loadDatabaseEnvVariablesAdapter = {
-        loadData: vi.fn(),
-      };
+    beforeEach(() => {
+      databaseFixture = 'test_database';
+      hostFixture = 'test_host';
+      passwordFixture = 'test_password';
+      portFixture = 1234;
+      userFixture = 'test_user';
 
-      loadDatabaseEnvVariablesAdapter.loadData.mockReturnValueOnce(databaseEnvVariablesFixture);
+      vi.stubEnv('DB_DATABASE', databaseFixture);
+      vi.stubEnv('DB_HOST', hostFixture);
+      vi.stubEnv('DB_PASSWORD', passwordFixture);
+      vi.stubEnv('DB_PORT', portFixture.toString());
+      vi.stubEnv('DB_USER', userFixture);
 
-      databaseConfig = new DatabaseConfig(loadDatabaseEnvVariablesAdapter);
+      databaseFixture = process.env.DB_DATABASE as string;
+      hostFixture = process.env.DB_HOST as string;
+      passwordFixture = process.env.DB_PASSWORD as string;
+      portFixture = parseInt(process.env.DB_PORT ?? '5432', 10);
+      userFixture = process.env.DB_USER as string;
+
+      databaseConfig = new DatabaseConfig();
     });
 
-    afterAll(() => {
+    afterEach(() => {
       vi.clearAllMocks();
     });
 
     it('should have all its properties set', () => {
-      expect(databaseConfig.database).toStrictEqual(databaseEnvVariablesFixture.DB_DATABASE);
-      expect(databaseConfig.host).toStrictEqual(databaseEnvVariablesFixture.DB_HOST);
-      expect(databaseConfig.password).toStrictEqual(databaseEnvVariablesFixture.DB_PASSWORD);
-      expect(databaseConfig.port).toStrictEqual(databaseEnvVariablesFixture.DB_PORT);
-      expect(databaseConfig.user).toStrictEqual(databaseEnvVariablesFixture.DB_USER);
+      expect(databaseConfig.database).toStrictEqual(databaseFixture);
+      expect(databaseConfig.host).toStrictEqual(hostFixture);
+      expect(databaseConfig.password).toStrictEqual(passwordFixture);
+      expect(databaseConfig.port).toStrictEqual(portFixture);
+      expect(databaseConfig.user).toStrictEqual(userFixture);
     });
   });
 });

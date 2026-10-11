@@ -2,17 +2,17 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class PaginationMetaHttp {
   @ApiProperty()
-  currentPage!: number;
+  public currentPage!: number;
 
   @ApiProperty()
-  itemCount!: number;
+  public itemCount!: number;
 
   @ApiProperty()
-  itemsPerPage!: number;
+  public itemsPerPage!: number;
 
   @ApiProperty()
-  totalItems!: number;
+  public totalItems!: number;
 
   @ApiProperty()
-  totalPages!: number;
+  public totalPages!: number;
 }

@@ -1,13 +1,12 @@
 import { FindOptions, QueryOrderMap } from '@mikro-orm/core';
 import { Mock, Mocked } from 'vitest';
-
-import { BaseEntityFindQueryToBaseEntityFindOptionsQueryMikroOrmConverterAsync } from './BaseEntityFindQueryToBaseEntityFindOptionsQueryMikroOrmConverterAsync';
 import { Converter } from '../../../domain/converter/Converter';
 import { BaseEntitySortKeyAndOrderType } from '../../../domain/model/BaseEntitySortKeyAndOrderType';
 import { BaseEntityFindQuery } from '../../../domain/query/BaseEntityFindQuery';
 import { BaseEntityFindQueryFixtures } from '../../../fixtures/domain/query/BaseEntityFindQueryFixtures';
 import { BaseEntityFindOptionsQueryMikroOrmFixtures } from '../../../fixtures/infrastructure/mikroOrm/query/BaseEntityFindOptionsQueryMikroOrmFixtures';
 import { BaseEntityMikroOrm } from '../model/BaseEntityMikroOrm';
+import { BaseEntityFindQueryToBaseEntityFindOptionsQueryMikroOrmConverterAsync } from './BaseEntityFindQueryToBaseEntityFindOptionsQueryMikroOrmConverterAsync';
 
 class BaseEntityFindQueryToBaseEntityFindOptionsQueryMikroOrmConverterAsyncTest extends BaseEntityFindQueryToBaseEntityFindOptionsQueryMikroOrmConverterAsync<
   BaseEntityFindQuery,
@@ -18,8 +17,7 @@ class BaseEntityFindQueryToBaseEntityFindOptionsQueryMikroOrmConverterAsyncTest 
       Converter<BaseEntitySortKeyAndOrderType[], QueryOrderMap<BaseEntityMikroOrm>[]>
     >,
     private readonly convertToEntityFindOptionsQueryMikroOrmMock: Mock<
-      [BaseEntityFindQuery, FindOptions<BaseEntityMikroOrm>],
-      Promise<FindOptions<BaseEntityMikroOrm>>
+      (...args: [BaseEntityFindQuery, FindOptions<BaseEntityMikroOrm>]) => Promise<FindOptions<BaseEntityMikroOrm>>
     >,
   ) {
     super(convertToBaseEntityQueryOrderMapMikroOrmMock);
@@ -38,12 +36,11 @@ describe(BaseEntityFindQueryToBaseEntityFindOptionsQueryMikroOrmConverterAsync.n
     Converter<BaseEntitySortKeyAndOrderType[], QueryOrderMap<BaseEntityMikroOrm>[]>
   >;
   let convertToEntityFindOptionsQueryMikroOrmMock: Mock<
-    [BaseEntityFindQuery, FindOptions<BaseEntityMikroOrm>],
-    Promise<FindOptions<BaseEntityMikroOrm>>
+    (...args: [BaseEntityFindQuery, FindOptions<BaseEntityMikroOrm>]) => Promise<FindOptions<BaseEntityMikroOrm>>
   >;
   let baseEntityFindQueryToBaseEntityFindOptionsQueryMikroOrmConverterAsync: BaseEntityFindQueryToBaseEntityFindOptionsQueryMikroOrmConverterAsyncTest;
 
-  beforeAll(() => {
+  beforeEach(() => {
     baseEntitySortKeyAndOrderTypeArrayToBaseEntityQueryOrderMapMikroOrmArrayConverterMock = {
       convert: vi.fn(),
     };
@@ -62,7 +59,7 @@ describe(BaseEntityFindQueryToBaseEntityFindOptionsQueryMikroOrmConverterAsync.n
       let baseEntityFindOptionsQueryMikroOrmFixture: FindOptions<BaseEntityMikroOrm>;
       let result: unknown;
 
-      beforeAll(async () => {
+      beforeEach(async () => {
         baseEntityFindQueryFixture = BaseEntityFindQueryFixtures.withSortKeyAndOrderTypes;
         baseEntityFindOptionsQueryMikroOrmFixture = BaseEntityFindOptionsQueryMikroOrmFixtures.withOrderBy;
 
@@ -72,12 +69,13 @@ describe(BaseEntityFindQueryToBaseEntityFindOptionsQueryMikroOrmConverterAsync.n
 
         convertToEntityFindOptionsQueryMikroOrmMock.mockResolvedValueOnce(baseEntityFindOptionsQueryMikroOrmFixture);
 
-        result = await baseEntityFindQueryToBaseEntityFindOptionsQueryMikroOrmConverterAsync.convert(
-          baseEntityFindQueryFixture,
-        );
+        result =
+          await baseEntityFindQueryToBaseEntityFindOptionsQueryMikroOrmConverterAsync.convert(
+            baseEntityFindQueryFixture,
+          );
       });
 
-      afterAll(() => {
+      afterEach(() => {
         vi.clearAllMocks();
       });
 

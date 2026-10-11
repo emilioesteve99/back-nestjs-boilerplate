@@ -19,7 +19,7 @@ describe(replaceMaxValue.name, () => {
     let result: unknown;
 
     describe('when called', () => {
-      beforeAll(() => {
+      beforeEach(() => {
         paramsFixture = { value: 1 } as TransformFnParams;
         valueFixture = 2;
 
@@ -38,7 +38,7 @@ describe(replaceMaxValue.name, () => {
     let result: unknown;
 
     describe('when called', () => {
-      beforeAll(() => {
+      beforeEach(() => {
         paramsFixture = { value: 2 } as TransformFnParams;
         valueFixture = 1;
 
@@ -56,7 +56,7 @@ describe(LimitedMax.name, () => {
   let transformMockReturnFixture: PropertyDecorator;
 
   describe('when called', () => {
-    beforeAll(() => {
+    beforeEach(() => {
       transformMockReturnFixture = () => undefined;
 
       (Transform as unknown as Mock).mockReturnValueOnce(transformMockReturnFixture);

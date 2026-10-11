@@ -1,8 +1,7 @@
 import { Injectable } from '@nestjs/common';
-
-import { ManagerAsync } from './ManagerAsync';
 import { PaginateFindAdapter } from '../adapter/PaginateFindAdapter';
 import { Pagination } from '../model/Pagination';
+import { ManagerAsync } from './ManagerAsync';
 
 @Injectable()
 export class PaginateFindManager<TQuery, TModel> implements ManagerAsync<TQuery, Pagination<TModel>> {

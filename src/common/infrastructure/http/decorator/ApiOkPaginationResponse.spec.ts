@@ -1,9 +1,8 @@
 import { applyDecorators, Type } from '@nestjs/common';
 import { ApiExtraModels, ApiOkResponse, ApiResponseOptions, getSchemaPath } from '@nestjs/swagger';
 import { Mock } from 'vitest';
-
-import { ApiOkPaginationResponse } from './ApiOkPaginationResponse';
 import { PaginationHttp } from '../model/PaginationHttp';
+import { ApiOkPaginationResponse } from './ApiOkPaginationResponse';
 
 vi.mock('@nestjs/common', async () => {
   const nestJsCommon: object = await vi.importActual('@nestjs/common');
@@ -30,7 +29,7 @@ vi.mock('@nestjs/swagger', async () => {
 });
 
 class HttpModelTest {
-  foo: any;
+  public foo: any;
 }
 
 describe(ApiOkPaginationResponse.name, () => {
@@ -41,7 +40,7 @@ describe(ApiOkPaginationResponse.name, () => {
     let apiOkResponseMockOptionsFixture: ApiResponseOptions;
     let apiOkResponseMockReturnFixture: MethodDecorator & ClassDecorator;
 
-    beforeAll(() => {
+    beforeEach(() => {
       apiOkPaginationResponseOptionsFixture = { description: 'description', type: HttpModelTest };
       apiExtraModelsMockReturnFixture = undefined;
       getSchemaPathMockReturnFixture = 'schemaPath';
@@ -72,7 +71,7 @@ describe(ApiOkPaginationResponse.name, () => {
       ApiOkPaginationResponse(apiOkPaginationResponseOptionsFixture);
     });
 
-    afterAll(() => {
+    afterEach(() => {
       vi.clearAllMocks();
     });
 

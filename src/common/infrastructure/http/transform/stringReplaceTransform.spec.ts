@@ -9,7 +9,7 @@ describe(stringReplaceTransform.name, () => {
     let transformFnParamsFixture: TransformFnParams;
     let result: unknown;
 
-    beforeAll(async () => {
+    beforeEach(async () => {
       key = 'integer';
       transformFnParamsFixture = {
         key,
@@ -23,7 +23,7 @@ describe(stringReplaceTransform.name, () => {
       }
     });
 
-    afterAll(() => {
+    afterEach(() => {
       vi.clearAllMocks();
     });
 
@@ -38,7 +38,7 @@ describe(stringReplaceTransform.name, () => {
     let transformFnParamsFixture: TransformFnParams;
     let result: string;
 
-    beforeAll(async () => {
+    beforeEach(async () => {
       key = 'string';
       transformFnParamsFixture = {
         key,
@@ -48,7 +48,7 @@ describe(stringReplaceTransform.name, () => {
       result = stringReplaceTransform(transformFnParamsFixture, 'a', 'b');
     });
 
-    afterAll(() => {
+    afterEach(() => {
       vi.clearAllMocks();
     });
 

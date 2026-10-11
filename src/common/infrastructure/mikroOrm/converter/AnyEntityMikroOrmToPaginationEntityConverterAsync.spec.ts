@@ -1,6 +1,4 @@
 import { Mocked } from 'vitest';
-
-import { AnyEntityMikroOrmToPaginationEntityConverterAsync } from './AnyEntityMikroOrmToPaginationEntityConverterAsync';
 import { ConverterAsync } from '../../../domain/converter/ConverterAsync';
 import { AnyEntity } from '../../../domain/model/AnyEntity';
 import { Pagination } from '../../../domain/model/Pagination';
@@ -9,6 +7,7 @@ import { AnyEntityFixtures } from '../../../fixtures/domain/model/AnyEntityFixtu
 import { AnyEntityPaginateFindQueryFixtures } from '../../../fixtures/domain/query/AnyEntityPaginateFindQueryFixtures';
 import { AnyEntityMikroOrmFixtures } from '../../../fixtures/infrastructure/mikroOrm/model/AnyEntityMikroOrmFixtures';
 import { AnyEntityMikroOrm } from '../model/AnyEntityMikroOrm';
+import { AnyEntityMikroOrmToPaginationEntityConverterAsync } from './AnyEntityMikroOrmToPaginationEntityConverterAsync';
 
 describe(AnyEntityMikroOrmToPaginationEntityConverterAsync.name, () => {
   let modelDbToModelConverterAsyncMock: Mocked<ConverterAsync<AnyEntityMikroOrm, AnyEntity>>;
@@ -17,7 +16,7 @@ describe(AnyEntityMikroOrmToPaginationEntityConverterAsync.name, () => {
     Pagination<AnyEntity>
   >;
 
-  beforeAll(() => {
+  beforeEach(() => {
     modelDbToModelConverterAsyncMock = {
       convert: vi.fn(),
     };
@@ -36,7 +35,7 @@ describe(AnyEntityMikroOrmToPaginationEntityConverterAsync.name, () => {
       let paginationAnyEntityFixture: Pagination<AnyEntity>;
       let result: unknown;
 
-      beforeAll(async () => {
+      beforeEach(async () => {
         anyEntityMikroOrmFixtures = [AnyEntityMikroOrmFixtures.any];
         paginationContext = {
           query: AnyEntityPaginateFindQueryFixtures.any,
@@ -63,7 +62,7 @@ describe(AnyEntityMikroOrmToPaginationEntityConverterAsync.name, () => {
         );
       });
 
-      afterAll(() => {
+      afterEach(() => {
         vi.clearAllMocks();
       });
 

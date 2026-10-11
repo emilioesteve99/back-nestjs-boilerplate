@@ -1,10 +1,9 @@
 import { Mock } from 'vitest';
-
-import { isPostgreSqlError } from './isPostgreSqlError';
-import { isPostgreSqlErrorWithErrorType } from './isPostgreSqlErrorWithErrorType';
 import { PostgreSqlErrorFixtures } from '../../../fixtures/infrastructure/postgresql/model/PostgreSqlErrorFixtures';
 import { PostgreSqlError } from '../model/PostgreSqlError';
 import { PostgreSqlErrorType } from '../model/PostgreSqlErrorType';
+import { isPostgreSqlError } from './isPostgreSqlError';
+import { isPostgreSqlErrorWithErrorType } from './isPostgreSqlErrorWithErrorType';
 
 vi.mock('./isPostgreSqlError');
 
@@ -13,14 +12,14 @@ describe(isPostgreSqlErrorWithErrorType.name, () => {
     let valueFixture: undefined;
     let result: unknown;
 
-    beforeAll(() => {
+    beforeEach(() => {
       valueFixture = undefined;
       (isPostgreSqlError as unknown as Mock).mockReturnValueOnce(false);
 
       result = isPostgreSqlErrorWithErrorType(valueFixture, [PostgreSqlErrorFixtures.any.code]);
     });
 
-    afterAll(() => {
+    afterEach(() => {
       vi.clearAllMocks();
     });
 
@@ -33,7 +32,7 @@ describe(isPostgreSqlErrorWithErrorType.name, () => {
     let valueFixture: PostgreSqlError;
     let errorTypesFixture: PostgreSqlErrorType[];
 
-    beforeAll(() => {
+    beforeEach(() => {
       valueFixture = PostgreSqlErrorFixtures.any;
       errorTypesFixture = [PostgreSqlErrorFixtures.any.code];
     });
@@ -41,13 +40,13 @@ describe(isPostgreSqlErrorWithErrorType.name, () => {
     describe('when called and isPostgreSqlError() returns true', () => {
       let result: unknown;
 
-      beforeAll(() => {
+      beforeEach(() => {
         (isPostgreSqlError as unknown as Mock).mockReturnValueOnce(true);
 
         result = isPostgreSqlErrorWithErrorType(valueFixture, errorTypesFixture);
       });
 
-      afterAll(() => {
+      afterEach(() => {
         vi.clearAllMocks();
       });
 
@@ -61,7 +60,7 @@ describe(isPostgreSqlErrorWithErrorType.name, () => {
     let valueFixture: PostgreSqlError;
     let errorTypesFixture: PostgreSqlErrorType[];
 
-    beforeAll(() => {
+    beforeEach(() => {
       valueFixture = PostgreSqlErrorFixtures.any;
       errorTypesFixture = [];
     });
@@ -69,13 +68,13 @@ describe(isPostgreSqlErrorWithErrorType.name, () => {
     describe('when called and isPostgreSqlError() returns true', () => {
       let result: unknown;
 
-      beforeAll(() => {
+      beforeEach(() => {
         (isPostgreSqlError as unknown as Mock).mockReturnValueOnce(true);
 
         result = isPostgreSqlErrorWithErrorType(valueFixture, errorTypesFixture);
       });
 
-      afterAll(() => {
+      afterEach(() => {
         vi.clearAllMocks();
       });
 

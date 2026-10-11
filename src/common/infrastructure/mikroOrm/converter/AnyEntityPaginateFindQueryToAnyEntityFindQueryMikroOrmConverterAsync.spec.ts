@@ -1,13 +1,12 @@
 import { ObjectQuery } from '@mikro-orm/core';
 import { Mocked } from 'vitest';
-
-import { AnyEntityPaginateFindQueryToAnyEntityFindQueryMikroOrmConverterAsync } from './AnyEntityPaginateFindQueryToAnyEntityFindQueryMikroOrmConverterAsync';
 import { ConverterAsync } from '../../../domain/converter/ConverterAsync';
 import { AnyEntityFindQuery } from '../../../domain/query/AnyEntityFindQuery';
 import { AnyEntityPaginateFindQuery } from '../../../domain/query/AnyEntityPaginateFindQuery';
 import { AnyEntityPaginateFindQueryFixtures } from '../../../fixtures/domain/query/AnyEntityPaginateFindQueryFixtures';
 import { AnyEntityFindQueryMikroOrmFixtures } from '../../../fixtures/infrastructure/mikroOrm/query/AnyEntityFindQueryMikroOrmFixtures';
 import { AnyEntityMikroOrm } from '../model/AnyEntityMikroOrm';
+import { AnyEntityPaginateFindQueryToAnyEntityFindQueryMikroOrmConverterAsync } from './AnyEntityPaginateFindQueryToAnyEntityFindQueryMikroOrmConverterAsync';
 
 describe(AnyEntityPaginateFindQueryToAnyEntityFindQueryMikroOrmConverterAsync.name, () => {
   let anyEntityFindQueryToAnyEntityFindQueryMikroOrmConverterAsyncMock: Mocked<
@@ -18,7 +17,7 @@ describe(AnyEntityPaginateFindQueryToAnyEntityFindQueryMikroOrmConverterAsync.na
     ObjectQuery<AnyEntityMikroOrm>
   >;
 
-  beforeAll(() => {
+  beforeEach(() => {
     anyEntityFindQueryToAnyEntityFindQueryMikroOrmConverterAsyncMock = {
       convert: vi.fn(),
     };
@@ -35,7 +34,7 @@ describe(AnyEntityPaginateFindQueryToAnyEntityFindQueryMikroOrmConverterAsync.na
       let anyEntityFindQueryMikroOrmFixture: ObjectQuery<AnyEntityMikroOrm>;
       let result: unknown;
 
-      beforeAll(async () => {
+      beforeEach(async () => {
         anyEntityPaginateFindQueryFixture = AnyEntityPaginateFindQueryFixtures.any;
         anyEntityFindQueryMikroOrmFixture = AnyEntityFindQueryMikroOrmFixtures.any;
 
@@ -48,7 +47,7 @@ describe(AnyEntityPaginateFindQueryToAnyEntityFindQueryMikroOrmConverterAsync.na
         );
       });
 
-      afterAll(() => {
+      afterEach(() => {
         vi.clearAllMocks();
       });
 

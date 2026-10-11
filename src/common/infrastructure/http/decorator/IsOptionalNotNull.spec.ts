@@ -18,7 +18,7 @@ describe(IsOptionalNotNullValidateIfCondition.name, () => {
 
   describe('having a undefined value', () => {
     describe('when called', () => {
-      beforeAll(async () => {
+      beforeEach(async () => {
         valueFixture = undefined;
 
         result = IsOptionalNotNullValidateIfCondition(undefined, valueFixture);
@@ -32,7 +32,7 @@ describe(IsOptionalNotNullValidateIfCondition.name, () => {
 
   describe('having a not undefined value', () => {
     describe('when called', () => {
-      beforeAll(async () => {
+      beforeEach(async () => {
         valueFixture = '';
 
         result = IsOptionalNotNullValidateIfCondition(undefined, valueFixture);
@@ -49,7 +49,7 @@ describe(IsOptionalNotNull.name, () => {
   let validateIfMockReturnFixture: PropertyDecorator;
 
   describe('when called', () => {
-    beforeAll(async () => {
+    beforeEach(async () => {
       validateIfMockReturnFixture = () => undefined;
 
       (ValidateIf as unknown as Mock).mockReturnValueOnce(validateIfMockReturnFixture);
@@ -57,7 +57,7 @@ describe(IsOptionalNotNull.name, () => {
       IsOptionalNotNull();
     });
 
-    afterAll(() => {
+    afterEach(() => {
       vi.clearAllMocks();
     });
 

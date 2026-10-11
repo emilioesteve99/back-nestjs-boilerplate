@@ -3,7 +3,7 @@ import { AppController } from './AppController';
 describe(AppController.name, () => {
   let appController: AppController;
 
-  beforeAll(() => {
+  beforeEach(() => {
     appController = new AppController();
   });
 
@@ -11,11 +11,11 @@ describe(AppController.name, () => {
     describe('when called', () => {
       let result: string;
 
-      beforeAll(() => {
+      beforeEach(() => {
         result = appController.status();
       });
 
-      afterAll(() => {
+      afterEach(() => {
         vi.clearAllMocks();
       });
 

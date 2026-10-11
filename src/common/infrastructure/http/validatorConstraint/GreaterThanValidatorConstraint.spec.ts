@@ -1,9 +1,8 @@
 import { BadRequestException } from '@nestjs/common';
 import { isDate, isNumber, isString, ValidationArguments } from 'class-validator';
 import { Mock } from 'vitest';
-
-import { GreaterThanValidatorConstraint } from './GreaterThanValidatorConstraint';
 import { ValidationArgumentsFixtures } from '../../../fixtures/http/validation/GreaterThanOrEqualToValidationArgumentsFixtures';
+import { GreaterThanValidatorConstraint } from './GreaterThanValidatorConstraint';
 
 vi.mock('class-validator', async () => {
   const classValidatorCommon: object = await vi.importActual('class-validator');
@@ -22,7 +21,7 @@ vi.mock('class-validator', async () => {
 describe(GreaterThanValidatorConstraint.name, () => {
   let greaterThanValidatorConstraint: GreaterThanValidatorConstraint;
 
-  beforeAll(() => {
+  beforeEach(() => {
     greaterThanValidatorConstraint = new GreaterThanValidatorConstraint();
   });
 
@@ -33,14 +32,14 @@ describe(GreaterThanValidatorConstraint.name, () => {
         let validationArgumentsFixture: ValidationArguments;
         let result: boolean;
 
-        beforeAll(async () => {
+        beforeEach(async () => {
           propertyValueFixture = 0;
           validationArgumentsFixture = ValidationArgumentsFixtures.withValueToCompareUndefined;
 
           result = greaterThanValidatorConstraint.validate(propertyValueFixture, validationArgumentsFixture);
         });
 
-        afterAll(() => {
+        afterEach(() => {
           vi.clearAllMocks();
         });
 
@@ -56,7 +55,7 @@ describe(GreaterThanValidatorConstraint.name, () => {
         let validationArgumentsFixture: ValidationArguments;
         let result: unknown;
 
-        beforeAll(async () => {
+        beforeEach(async () => {
           propertyValueFixture = {} as string;
           validationArgumentsFixture = ValidationArgumentsFixtures.withValueToCompare2;
 
@@ -71,7 +70,7 @@ describe(GreaterThanValidatorConstraint.name, () => {
           }
         });
 
-        afterAll(() => {
+        afterEach(() => {
           vi.clearAllMocks();
         });
 
@@ -90,7 +89,7 @@ describe(GreaterThanValidatorConstraint.name, () => {
         let validationArgumentsFixture: ValidationArguments;
         let result: unknown;
 
-        beforeAll(async () => {
+        beforeEach(async () => {
           propertyValueFixture = '';
           validationArgumentsFixture = ValidationArgumentsFixtures.withValueToCompare2;
 
@@ -105,7 +104,7 @@ describe(GreaterThanValidatorConstraint.name, () => {
           }
         });
 
-        afterAll(() => {
+        afterEach(() => {
           vi.clearAllMocks();
         });
 
@@ -124,7 +123,7 @@ describe(GreaterThanValidatorConstraint.name, () => {
         let validationArgumentsFixture: ValidationArguments;
         let result: boolean;
 
-        beforeAll(async () => {
+        beforeEach(async () => {
           propertyValueFixture = 3;
           validationArgumentsFixture = ValidationArgumentsFixtures.withValueToCompare2;
 
@@ -135,7 +134,7 @@ describe(GreaterThanValidatorConstraint.name, () => {
           result = greaterThanValidatorConstraint.validate(propertyValueFixture, validationArgumentsFixture);
         });
 
-        afterAll(() => {
+        afterEach(() => {
           vi.clearAllMocks();
         });
 
@@ -151,7 +150,7 @@ describe(GreaterThanValidatorConstraint.name, () => {
         let validationArgumentsFixture: ValidationArguments;
         let result: boolean;
 
-        beforeAll(async () => {
+        beforeEach(async () => {
           propertyValueFixture = 2;
           validationArgumentsFixture = ValidationArgumentsFixtures.withValueToCompare2;
 
@@ -162,7 +161,7 @@ describe(GreaterThanValidatorConstraint.name, () => {
           result = greaterThanValidatorConstraint.validate(propertyValueFixture, validationArgumentsFixture);
         });
 
-        afterAll(() => {
+        afterEach(() => {
           vi.clearAllMocks();
         });
 
@@ -178,7 +177,7 @@ describe(GreaterThanValidatorConstraint.name, () => {
       let validationArgumentsFixture: ValidationArguments;
       let result: string;
 
-      beforeAll(async () => {
+      beforeEach(async () => {
         validationArgumentsFixture = ValidationArgumentsFixtures.withValueToCompare2;
 
         result = greaterThanValidatorConstraint.defaultMessage(validationArgumentsFixture);

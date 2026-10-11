@@ -19,7 +19,7 @@ describe(parseArrayOfTransform.name, () => {
     let transformFnParamsFixture: TransformFnParams;
     let result: unknown;
 
-    beforeAll(async () => {
+    beforeEach(async () => {
       key = 'arrayOfNumbers';
       transformFnParamsFixture = {
         key,
@@ -33,7 +33,7 @@ describe(parseArrayOfTransform.name, () => {
       }
     });
 
-    afterAll(() => {
+    afterEach(() => {
       vi.clearAllMocks();
     });
 
@@ -48,7 +48,7 @@ describe(parseArrayOfTransform.name, () => {
     let transformFnParamsFixture: TransformFnParams;
     let result: unknown;
 
-    beforeAll(async () => {
+    beforeEach(async () => {
       key = 'arrayOfNumbers';
       transformFnParamsFixture = {
         key,
@@ -62,7 +62,7 @@ describe(parseArrayOfTransform.name, () => {
       }
     });
 
-    afterAll(() => {
+    afterEach(() => {
       vi.clearAllMocks();
     });
 
@@ -78,7 +78,7 @@ describe(parseArrayOfTransform.name, () => {
     let transformFnParamsFixture: TransformFnParams;
     let result: unknown;
 
-    beforeAll(async () => {
+    beforeEach(async () => {
       key = 'arrayOfNumbers';
       valueFixtures = [1, 2, 3, 4, 5];
       transformFnParamsFixture = {
@@ -93,7 +93,7 @@ describe(parseArrayOfTransform.name, () => {
       result = parseArrayOfTransform(Number, transformFnParamsFixture);
     });
 
-    afterAll(() => {
+    afterEach(() => {
       vi.clearAllMocks();
     });
 

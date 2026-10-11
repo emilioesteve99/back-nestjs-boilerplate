@@ -1,8 +1,7 @@
 import { Mocked } from 'vitest';
-
-import { PaginateFindQueryHandler } from './PaginateFindQueryHandler';
 import { ManagerAsync } from '../../domain/manager/ManagerAsync';
 import { Pagination } from '../../domain/model/Pagination';
+import { PaginateFindQueryHandler } from './PaginateFindQueryHandler';
 
 interface QueryTest {
   foo: any;
@@ -16,7 +15,7 @@ describe(PaginateFindQueryHandler.name, () => {
   let paginateFindManagerMock: Mocked<ManagerAsync<QueryTest, Pagination<ModelTest>>>;
   let paginateFindQueryHandler: PaginateFindQueryHandler<QueryTest, ModelTest>;
 
-  beforeAll(() => {
+  beforeEach(() => {
     paginateFindManagerMock = {
       manage: vi.fn(),
     };
@@ -30,7 +29,7 @@ describe(PaginateFindQueryHandler.name, () => {
       let paginationModelTestFixture: Pagination<ModelTest>;
       let result: unknown;
 
-      beforeAll(async () => {
+      beforeEach(async () => {
         paginationModelTestFixture = {
           items: [
             {
@@ -54,7 +53,7 @@ describe(PaginateFindQueryHandler.name, () => {
         result = await paginateFindQueryHandler.execute(queryTestFixture);
       });
 
-      afterAll(() => {
+      afterEach(() => {
         vi.clearAllMocks();
       });
 

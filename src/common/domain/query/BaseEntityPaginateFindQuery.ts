@@ -1,5 +1,5 @@
-import { BaseEntityFindQuery } from './BaseEntityFindQuery';
 import { PaginationOptions } from '../model/PaginationOptions';
+import { BaseEntityFindQuery } from './BaseEntityFindQuery';
 
 export interface BaseEntityPaginateFindQuery {
   findQuery: BaseEntityFindQuery;

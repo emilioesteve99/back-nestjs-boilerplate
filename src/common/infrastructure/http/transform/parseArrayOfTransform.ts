@@ -5,7 +5,7 @@ export function parseArrayOfTransform<T>(type: Type<T>, params: TransformFnParam
   let array: unknown[];
   try {
     array = JSON.parse(params.value);
-  } catch (error) {
+  } catch {
     throw new BadRequestException(`${params.key} property must be a valid JSON`);
   }
 

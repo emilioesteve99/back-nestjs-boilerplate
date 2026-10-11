@@ -1,13 +1,12 @@
 import { EntityData, EntityManager, EntityRepository, ObjectQuery } from '@mikro-orm/core';
 import { Mock, Mocked } from 'vitest';
-
-import { UpdateOneMikroOrmAdapter } from './UpdateOneMikroOrmAdapter';
 import { ConverterAsync } from '../../../domain/converter/ConverterAsync';
 import { InvalidArgumentException } from '../../../domain/exception/InvalidArgumentException';
 import { PostgreSqlErrorFixtures } from '../../../fixtures/infrastructure/postgresql/model/PostgreSqlErrorFixtures';
 import { PostgreSqlError } from '../../postgresql/model/PostgreSqlError';
 import { PostgreSqlErrorType } from '../../postgresql/model/PostgreSqlErrorType';
 import { isPostgreSqlErrorWithErrorType } from '../../postgresql/typeguard/isPostgreSqlErrorWithErrorType';
+import { UpdateOneMikroOrmAdapter } from './UpdateOneMikroOrmAdapter';
 
 vi.mock('../../postgresql/typeguard/isPostgreSqlErrorWithErrorType');
 
@@ -26,10 +25,11 @@ describe(UpdateOneMikroOrmAdapter.name, () => {
   let commandTestToSetQueryMikroOrmConverterAsyncMock: Mocked<ConverterAsync<CommandTest, EntityData<ModelTest>>>;
   let updateOneMikroOrmAdapter: UpdateOneMikroOrmAdapter<CommandTest, ModelTest>;
 
-  beforeAll(() => {
+  beforeEach(() => {
     entityManagerMock = {
-      persistAndFlush: vi.fn(),
-    } as Partial<Mocked<EntityManager>> as Mocked<EntityManager>;
+      flush: vi.fn(),
+      persist: vi.fn(),
+    } as unknown as Mocked<EntityManager>;
     entityRepositoryMock = {
       assign: vi.fn(),
       find: vi.fn(),
@@ -59,7 +59,7 @@ describe(UpdateOneMikroOrmAdapter.name, () => {
       let modelTestFixtures: ModelTest[];
       let setQueryMikroOrmTestFixture: EntityData<ModelTest>;
 
-      beforeAll(async () => {
+      beforeEach(async () => {
         commandTestFixture = {
           foo: 'foo',
         };
@@ -82,7 +82,7 @@ describe(UpdateOneMikroOrmAdapter.name, () => {
         await updateOneMikroOrmAdapter.updateOne(commandTestFixture);
       });
 
-      afterAll(() => {
+      afterEach(() => {
         vi.clearAllMocks();
       });
 
@@ -104,7 +104,7 @@ describe(UpdateOneMikroOrmAdapter.name, () => {
             nthCall,
             modelTestFixtures[nthCall - 1],
             setQueryMikroOrmTestFixture,
-            { mergeObjects: false },
+            { mergeObjectProperties: false },
           );
         }
       });
@@ -113,9 +113,9 @@ describe(UpdateOneMikroOrmAdapter.name, () => {
         expect(entityRepositoryMock.getEntityManager).toHaveBeenCalledOnce();
       });
 
-      it('should call entityRepository.getEntityManager().persistAndFlush()', () => {
-        expect(entityManagerMock.persistAndFlush).toHaveBeenCalledOnce();
-        expect(entityManagerMock.persistAndFlush).toHaveBeenCalledWith(modelTestFixtures);
+      it('should call entityManager.persist() and flush()', () => {
+        expect(entityManagerMock.persist).toHaveBeenCalledOnce();
+        expect(entityManagerMock.persist).toHaveBeenCalledWith(modelTestFixtures);
       });
     });
 
@@ -128,7 +128,7 @@ describe(UpdateOneMikroOrmAdapter.name, () => {
       let errorFixture: PostgreSqlError;
       let result: unknown;
 
-      beforeAll(async () => {
+      beforeEach(async () => {
         commandTestFixture = {
           foo: 'foo',
         };
@@ -147,7 +147,7 @@ describe(UpdateOneMikroOrmAdapter.name, () => {
         commandTestToFindQueryMikroOrmConverterAsyncMock.convert.mockResolvedValueOnce(findQueryMikroOrmTestFixture);
         commandTestToSetQueryMikroOrmConverterAsyncMock.convert.mockResolvedValueOnce(setQueryMikroOrmTestFixture);
         entityRepositoryMock.find.mockResolvedValueOnce(modelTestFixtures);
-        entityManagerMock.persistAndFlush.mockRejectedValueOnce(errorFixture);
+        entityManagerMock.flush.mockRejectedValueOnce(errorFixture);
         (isPostgreSqlErrorWithErrorType as unknown as Mock).mockReturnValueOnce(true);
 
         try {
@@ -157,7 +157,7 @@ describe(UpdateOneMikroOrmAdapter.name, () => {
         }
       });
 
-      afterAll(() => {
+      afterEach(() => {
         vi.clearAllMocks();
       });
 
@@ -174,7 +174,7 @@ describe(UpdateOneMikroOrmAdapter.name, () => {
       });
     });
 
-    describe('when called and entityRepository.persistAndFlush throws an Error matching PostgreSqlErrorType.UNIQUE_VIOLATION', () => {
+    describe('when called and entityManager.flush throws an Error matching PostgreSqlErrorType.UNIQUE_VIOLATION', () => {
       let commandTestFixture: CommandTest;
       let findQueryMikroOrmTestFixture: ObjectQuery<ModelTest>;
       let modelTestFixture: ModelTest;
@@ -183,7 +183,7 @@ describe(UpdateOneMikroOrmAdapter.name, () => {
       let errorFixture: PostgreSqlError;
       let result: unknown;
 
-      beforeAll(async () => {
+      beforeEach(async () => {
         commandTestFixture = {
           foo: 'foo',
         };
@@ -202,7 +202,7 @@ describe(UpdateOneMikroOrmAdapter.name, () => {
         commandTestToFindQueryMikroOrmConverterAsyncMock.convert.mockResolvedValueOnce(findQueryMikroOrmTestFixture);
         commandTestToSetQueryMikroOrmConverterAsyncMock.convert.mockResolvedValueOnce(setQueryMikroOrmTestFixture);
         entityRepositoryMock.find.mockResolvedValueOnce(modelTestFixtures);
-        entityManagerMock.persistAndFlush.mockRejectedValueOnce(errorFixture);
+        entityManagerMock.flush.mockRejectedValueOnce(errorFixture);
         (isPostgreSqlErrorWithErrorType as unknown as Mock).mockReturnValueOnce(false).mockReturnValueOnce(true);
 
         try {
@@ -212,7 +212,7 @@ describe(UpdateOneMikroOrmAdapter.name, () => {
         }
       });
 
-      afterAll(() => {
+      afterEach(() => {
         vi.clearAllMocks();
       });
 
@@ -241,7 +241,7 @@ describe(UpdateOneMikroOrmAdapter.name, () => {
       let errorFixture: unknown;
       let result: unknown;
 
-      beforeAll(async () => {
+      beforeEach(async () => {
         commandTestFixture = {
           foo: 'foo',
         };
@@ -260,7 +260,7 @@ describe(UpdateOneMikroOrmAdapter.name, () => {
         commandTestToFindQueryMikroOrmConverterAsyncMock.convert.mockResolvedValueOnce(findQueryMikroOrmTestFixture);
         commandTestToSetQueryMikroOrmConverterAsyncMock.convert.mockResolvedValueOnce(setQueryMikroOrmTestFixture);
         entityRepositoryMock.find.mockResolvedValueOnce(modelTestFixtures);
-        entityManagerMock.persistAndFlush.mockRejectedValueOnce(errorFixture);
+        entityManagerMock.flush.mockRejectedValueOnce(errorFixture);
         (isPostgreSqlErrorWithErrorType as unknown as Mock).mockReturnValueOnce(false);
 
         try {
@@ -270,7 +270,7 @@ describe(UpdateOneMikroOrmAdapter.name, () => {
         }
       });
 
-      afterAll(() => {
+      afterEach(() => {
         vi.clearAllMocks();
       });
 

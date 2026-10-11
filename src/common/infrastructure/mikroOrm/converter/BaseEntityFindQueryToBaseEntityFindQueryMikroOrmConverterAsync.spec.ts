@@ -1,11 +1,10 @@
 import { ObjectQuery } from '@mikro-orm/core';
-import { afterAll, beforeAll, Mock } from 'vitest';
-
-import { BaseEntityFindQueryToBaseEntityFindQueryMikroOrmConverterAsync } from './BaseEntityFindQueryToBaseEntityFindQueryMikroOrmConverterAsync';
+import { Mock } from 'vitest';
 import { BaseEntityFindQuery } from '../../../domain/query/BaseEntityFindQuery';
 import { BaseEntityFindQueryFixtures } from '../../../fixtures/domain/query/BaseEntityFindQueryFixtures';
 import { BaseEntityFindQueryMikroOrmFixtures } from '../../../fixtures/infrastructure/mikroOrm/query/BaseEntityFindQueryMikroOrmFixtures';
 import { BaseEntityMikroOrm } from '../model/BaseEntityMikroOrm';
+import { BaseEntityFindQueryToBaseEntityFindQueryMikroOrmConverterAsync } from './BaseEntityFindQueryToBaseEntityFindQueryMikroOrmConverterAsync';
 
 class BaseEntityFindQueryToBaseEntityFindQueryMikroOrmConverterAsyncTest extends BaseEntityFindQueryToBaseEntityFindQueryMikroOrmConverterAsync<
   BaseEntityFindQuery,
@@ -13,8 +12,7 @@ class BaseEntityFindQueryToBaseEntityFindQueryMikroOrmConverterAsyncTest extends
 > {
   public constructor(
     private readonly convertToEntityFindQueryMikroOrmMock: Mock<
-      [BaseEntityFindQuery, ObjectQuery<BaseEntityMikroOrm>],
-      Promise<ObjectQuery<BaseEntityMikroOrm>>
+      (...args: [BaseEntityFindQuery, ObjectQuery<BaseEntityMikroOrm>]) => Promise<ObjectQuery<BaseEntityMikroOrm>>
     >,
   ) {
     super();
@@ -39,12 +37,11 @@ class BaseEntityFindQueryToBaseEntityFindQueryMikroOrmConverterAsyncTest extends
 
 describe(BaseEntityFindQueryToBaseEntityFindQueryMikroOrmConverterAsync.name, () => {
   let convertToEntityFindQueryMikroOrmMock: Mock<
-    [BaseEntityFindQuery, ObjectQuery<BaseEntityMikroOrm>],
-    Promise<ObjectQuery<BaseEntityMikroOrm>>
+    (...args: [BaseEntityFindQuery, ObjectQuery<BaseEntityMikroOrm>]) => Promise<ObjectQuery<BaseEntityMikroOrm>>
   >;
   let baseEntityFindQueryToBaseEntityFindQueryMikroOrmConverterAsync: BaseEntityFindQueryToBaseEntityFindQueryMikroOrmConverterAsyncTest;
 
-  beforeAll(() => {
+  beforeEach(() => {
     convertToEntityFindQueryMikroOrmMock = vi.fn();
 
     baseEntityFindQueryToBaseEntityFindQueryMikroOrmConverterAsync =
@@ -58,18 +55,17 @@ describe(BaseEntityFindQueryToBaseEntityFindQueryMikroOrmConverterAsync.name, ()
         let baseEntityFindQueryMikroOrmFixture: ObjectQuery<BaseEntityMikroOrm>;
         let result: unknown;
 
-        beforeAll(async () => {
+        beforeEach(async () => {
           baseEntityFindQueryFixture = BaseEntityFindQueryFixtures.withIds;
           baseEntityFindQueryMikroOrmFixture = BaseEntityFindQueryMikroOrmFixtures.withIds;
 
           convertToEntityFindQueryMikroOrmMock.mockResolvedValueOnce(baseEntityFindQueryMikroOrmFixture);
 
-          result = await baseEntityFindQueryToBaseEntityFindQueryMikroOrmConverterAsync.convert(
-            baseEntityFindQueryFixture,
-          );
+          result =
+            await baseEntityFindQueryToBaseEntityFindQueryMikroOrmConverterAsync.convert(baseEntityFindQueryFixture);
         });
 
-        afterAll(() => {
+        afterEach(() => {
           vi.clearAllMocks();
         });
 
@@ -95,7 +91,7 @@ describe(BaseEntityFindQueryToBaseEntityFindQueryMikroOrmConverterAsync.name, ()
       let queryProperty: keyof BaseEntityFindQuery;
       let entityProperty: keyof ObjectQuery<BaseEntityMikroOrm>;
 
-      beforeAll(() => {
+      beforeEach(() => {
         input = BaseEntityFindQueryFixtures.withIds;
         findQueryMikroOrm = {
           ids: BaseEntityFindQueryFixtures.any.ids,
@@ -111,7 +107,7 @@ describe(BaseEntityFindQueryToBaseEntityFindQueryMikroOrmConverterAsync.name, ()
         );
       });
 
-      afterAll(() => {
+      afterEach(() => {
         vi.clearAllMocks();
       });
 

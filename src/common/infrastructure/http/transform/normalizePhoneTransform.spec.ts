@@ -9,7 +9,7 @@ describe(normalizePhoneTransform.name, () => {
     let transformFnParamsFixture: TransformFnParams;
     let result: unknown;
 
-    beforeAll(async () => {
+    beforeEach(async () => {
       key = 'phone';
       transformFnParamsFixture = {
         key,
@@ -25,7 +25,7 @@ describe(normalizePhoneTransform.name, () => {
       }
     });
 
-    afterAll(() => {
+    afterEach(() => {
       vi.clearAllMocks();
     });
 
@@ -42,7 +42,7 @@ describe(normalizePhoneTransform.name, () => {
     let transformFnParamsFixture: TransformFnParams;
     let result: unknown;
 
-    beforeAll(async () => {
+    beforeEach(async () => {
       key = 'phone';
       valueFixture = '+34666 666 666';
       phoneFixture = '+34666666666';
@@ -56,7 +56,7 @@ describe(normalizePhoneTransform.name, () => {
       result = normalizePhoneTransform(transformFnParamsFixture);
     });
 
-    afterAll(() => {
+    afterEach(() => {
       vi.clearAllMocks();
     });
 

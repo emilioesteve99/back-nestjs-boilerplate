@@ -1,13 +1,12 @@
 import { QueryOrder, QueryOrderMap } from '@mikro-orm/core';
 import { Mock, Mocked } from 'vitest';
-
-import { BaseEntitySortKeyAndOrderTypeToBaseEntityQueryOrderMapMikroOrmConverter } from './BaseEntitySortKeyAndOrderTypeToBaseEntityQueryOrderMapMikroOrmConverter';
 import { Converter } from '../../../domain/converter/Converter';
 import { BaseEntitySortKeyAndOrderType } from '../../../domain/model/BaseEntitySortKeyAndOrderType';
 import { OrderType } from '../../../domain/model/OrderType';
 import { BaseEntitySortKeyAndOrderTypeFixtures } from '../../../fixtures/domain/model/BaseEntitySortKeyAndOrderTypeFixtures';
 import { BaseEntityQueryOrderMapMikroOrmFixtures } from '../../../fixtures/infrastructure/mikroOrm/query/BaseEntityQueryOrderMapMikroOrmFixtures';
 import { BaseEntityMikroOrm } from '../model/BaseEntityMikroOrm';
+import { BaseEntitySortKeyAndOrderTypeToBaseEntityQueryOrderMapMikroOrmConverter } from './BaseEntitySortKeyAndOrderTypeToBaseEntityQueryOrderMapMikroOrmConverter';
 
 class BaseEntitySortKeyAndOrderTypeToBaseEntityQueryOrderMapMikroOrmConverterTest extends BaseEntitySortKeyAndOrderTypeToBaseEntityQueryOrderMapMikroOrmConverter<
   BaseEntitySortKeyAndOrderType,
@@ -15,8 +14,7 @@ class BaseEntitySortKeyAndOrderTypeToBaseEntityQueryOrderMapMikroOrmConverterTes
 > {
   public constructor(
     private readonly convertToSpecificEntityQueryOrderMapMikroOrmMock: Mock<
-      [BaseEntitySortKeyAndOrderType, QueryOrderMap<BaseEntityMikroOrm>],
-      QueryOrderMap<BaseEntityMikroOrm>
+      (...args: [BaseEntitySortKeyAndOrderType, QueryOrderMap<BaseEntityMikroOrm>]) => QueryOrderMap<BaseEntityMikroOrm>
     >,
     orderTypeToQueryOrderMikroOrmConverterMock: Mocked<Converter<OrderType, QueryOrder>>,
   ) {
@@ -33,13 +31,12 @@ class BaseEntitySortKeyAndOrderTypeToBaseEntityQueryOrderMapMikroOrmConverterTes
 
 describe(BaseEntitySortKeyAndOrderTypeToBaseEntityQueryOrderMapMikroOrmConverter.name, () => {
   let convertToSpecificEntityQueryOrderMapMikroOrmMock: Mock<
-    [BaseEntitySortKeyAndOrderType, QueryOrderMap<BaseEntityMikroOrm>],
-    QueryOrderMap<BaseEntityMikroOrm>
+    (...args: [BaseEntitySortKeyAndOrderType, QueryOrderMap<BaseEntityMikroOrm>]) => QueryOrderMap<BaseEntityMikroOrm>
   >;
   let orderTypeToQueryOrderMikroOrmConverterMock: Mocked<Converter<OrderType, QueryOrder>>;
   let baseEntitySortKeyAndOrderTypeToBaseEntityQueryOrderMapMikroOrmConverterTest: BaseEntitySortKeyAndOrderTypeToBaseEntityQueryOrderMapMikroOrmConverterTest;
 
-  beforeAll(() => {
+  beforeEach(() => {
     convertToSpecificEntityQueryOrderMapMikroOrmMock = vi.fn();
     orderTypeToQueryOrderMikroOrmConverterMock = {
       convert: vi.fn(),
@@ -59,7 +56,7 @@ describe(BaseEntitySortKeyAndOrderTypeToBaseEntityQueryOrderMapMikroOrmConverter
         let baseEntityQueryOrderMapMikroOrmFixture: QueryOrderMap<BaseEntityMikroOrm>;
         let result: unknown;
 
-        beforeAll(() => {
+        beforeEach(() => {
           baseEntitySortKeyAndOrderTypeFixture = BaseEntitySortKeyAndOrderTypeFixtures.withCreatedAt;
           baseEntityQueryOrderMapMikroOrmFixture = BaseEntityQueryOrderMapMikroOrmFixtures.withCreatedAt;
 
@@ -74,7 +71,7 @@ describe(BaseEntitySortKeyAndOrderTypeToBaseEntityQueryOrderMapMikroOrmConverter
           );
         });
 
-        afterAll(() => {
+        afterEach(() => {
           vi.clearAllMocks();
         });
 
@@ -98,7 +95,7 @@ describe(BaseEntitySortKeyAndOrderTypeToBaseEntityQueryOrderMapMikroOrmConverter
         let baseEntityQueryOrderMapMikroOrmFixture: QueryOrderMap<BaseEntityMikroOrm>;
         let result: unknown;
 
-        beforeAll(() => {
+        beforeEach(() => {
           baseEntitySortKeyAndOrderTypeFixture = BaseEntitySortKeyAndOrderTypeFixtures.withId;
           baseEntityQueryOrderMapMikroOrmFixture = BaseEntityQueryOrderMapMikroOrmFixtures.withId;
 
@@ -113,7 +110,7 @@ describe(BaseEntitySortKeyAndOrderTypeToBaseEntityQueryOrderMapMikroOrmConverter
           );
         });
 
-        afterAll(() => {
+        afterEach(() => {
           vi.clearAllMocks();
         });
 
@@ -137,7 +134,7 @@ describe(BaseEntitySortKeyAndOrderTypeToBaseEntityQueryOrderMapMikroOrmConverter
         let baseEntityQueryOrderMapMikroOrmFixture: QueryOrderMap<BaseEntityMikroOrm>;
         let result: unknown;
 
-        beforeAll(() => {
+        beforeEach(() => {
           baseEntitySortKeyAndOrderTypeFixture = BaseEntitySortKeyAndOrderTypeFixtures.withUpdatedAt;
           baseEntityQueryOrderMapMikroOrmFixture = BaseEntityQueryOrderMapMikroOrmFixtures.withUpdatedAt;
 
@@ -151,7 +148,7 @@ describe(BaseEntitySortKeyAndOrderTypeToBaseEntityQueryOrderMapMikroOrmConverter
           );
         });
 
-        afterAll(() => {
+        afterEach(() => {
           vi.clearAllMocks();
         });
 

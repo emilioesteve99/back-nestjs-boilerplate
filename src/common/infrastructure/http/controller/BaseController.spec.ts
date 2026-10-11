@@ -1,11 +1,10 @@
 import { HttpException, InternalServerErrorException } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
-import { afterAll, beforeAll, Mocked } from 'vitest';
-
-import { BaseController } from './BaseController';
+import { Mocked } from 'vitest';
 import { EntityNotFoundException } from '../../../domain/exception/EntityNotFoundException';
 import { AnyEntity } from '../../../domain/model/AnyEntity';
 import { AnyEntityFindOneQuery } from '../../../domain/query/AnyEntityFindOneQuery';
+import { BaseController } from './BaseController';
 
 class TestBaseController extends BaseController {
   public override async findOneOrThrowHttpException<TEntity>(
@@ -21,7 +20,7 @@ describe(BaseController.name, () => {
 
   let testBaseController: TestBaseController;
 
-  beforeAll(() => {
+  beforeEach(() => {
     queryBusMock = {
       execute: vi.fn(),
     } as Mocked<Partial<QueryBus>> as Mocked<QueryBus>;
@@ -36,7 +35,7 @@ describe(BaseController.name, () => {
         let exceptionFixture: HttpException;
         let result: unknown;
 
-        beforeAll(async () => {
+        beforeEach(async () => {
           queryFixture = {};
           exceptionFixture = new InternalServerErrorException();
 
@@ -47,7 +46,7 @@ describe(BaseController.name, () => {
           }
         });
 
-        afterAll(() => {
+        afterEach(() => {
           vi.clearAllMocks();
         });
 
@@ -66,7 +65,7 @@ describe(BaseController.name, () => {
       let queryFixture: AnyEntityFindOneQuery;
       let result: unknown;
 
-      beforeAll(async () => {
+      beforeEach(async () => {
         queryFixture = {};
 
         try {
@@ -76,7 +75,7 @@ describe(BaseController.name, () => {
         }
       });
 
-      afterAll(() => {
+      afterEach(() => {
         vi.clearAllMocks();
       });
 
@@ -90,7 +89,7 @@ describe(BaseController.name, () => {
       let entityFixture: AnyEntity;
       let result: unknown;
 
-      beforeAll(async () => {
+      beforeEach(async () => {
         queryFixture = {};
         entityFixture = {};
 
@@ -99,7 +98,7 @@ describe(BaseController.name, () => {
         result = await testBaseController.findOneOrThrowHttpException(queryFixture);
       });
 
-      afterAll(() => {
+      afterEach(() => {
         vi.clearAllMocks();
       });
 

@@ -1,18 +1,18 @@
-import { isPostgreSqlError } from './isPostgreSqlError';
 import { PostgreSqlErrorFixtures } from '../../../fixtures/infrastructure/postgresql/model/PostgreSqlErrorFixtures';
+import { isPostgreSqlError } from './isPostgreSqlError';
 
 describe(isPostgreSqlError.name, () => {
   describe('having a value undefined', () => {
     let valueFixture: undefined;
 
-    beforeAll(() => {
+    beforeEach(() => {
       valueFixture = undefined;
     });
 
     describe('when called', () => {
       let result: unknown;
 
-      beforeAll(() => {
+      beforeEach(() => {
         result = isPostgreSqlError(valueFixture);
       });
 
@@ -25,14 +25,14 @@ describe(isPostgreSqlError.name, () => {
   describe('having a value null', () => {
     let valueFixture: null;
 
-    beforeAll(() => {
+    beforeEach(() => {
       valueFixture = null;
     });
 
     describe('when called', () => {
       let result: unknown;
 
-      beforeAll(() => {
+      beforeEach(() => {
         result = isPostgreSqlError(valueFixture);
       });
 
@@ -45,14 +45,14 @@ describe(isPostgreSqlError.name, () => {
   describe('having a value with no code', () => {
     let valueFixture: unknown;
 
-    beforeAll(() => {
+    beforeEach(() => {
       valueFixture = {};
     });
 
     describe('when called', () => {
       let result: unknown;
 
-      beforeAll(() => {
+      beforeEach(() => {
         result = isPostgreSqlError(valueFixture);
       });
 
@@ -65,14 +65,14 @@ describe(isPostgreSqlError.name, () => {
   describe('having a value with code', () => {
     let valueFixture: unknown;
 
-    beforeAll(() => {
+    beforeEach(() => {
       valueFixture = PostgreSqlErrorFixtures.any;
     });
 
     describe('when called', () => {
       let result: unknown;
 
-      beforeAll(() => {
+      beforeEach(() => {
         result = isPostgreSqlError(valueFixture);
       });
 

@@ -9,25 +9,25 @@ export class BaseEntitySortByHttpV1 implements BaseEntitySortKeyAndOrderType {
   @ApiPropertyOptional({ enum: OrderType, enumName: 'OrderType' })
   @IsOptionalNotNull()
   @IsEnum(OrderType)
-  createdAt?: OrderType;
+  public createdAt?: OrderType;
 
   @ApiPropertyOptional({ enum: OrderType, enumName: 'OrderType' })
   @IsOptionalNotNull()
   @IsEnum(OrderType)
-  createdById?: OrderType;
+  public createdById?: OrderType;
 
   @ApiPropertyOptional({ enum: OrderType, enumName: 'OrderType' })
   @IsOptionalNotNull()
   @IsEnum(OrderType)
-  id?: OrderType;
+  public id?: OrderType;
 
   @ApiPropertyOptional({ enum: OrderType, enumName: 'OrderType' })
   @IsOptionalNotNull()
   @IsEnum(OrderType)
-  updatedAt?: OrderType;
+  public updatedAt?: OrderType;
 
   @ApiPropertyOptional({ enum: OrderType, enumName: 'OrderType' })
   @IsOptionalNotNull()
   @IsEnum(OrderType)
-  updatedById?: OrderType;
+  public updatedById?: OrderType;
 }

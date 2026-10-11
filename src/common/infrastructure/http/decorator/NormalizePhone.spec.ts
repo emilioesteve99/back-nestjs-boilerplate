@@ -16,7 +16,7 @@ describe(NormalizePhone.name, () => {
   let transformMockReturnFixture: PropertyDecorator;
 
   describe('when called', () => {
-    beforeAll(async () => {
+    beforeEach(async () => {
       transformMockReturnFixture = () => undefined;
 
       (Transform as unknown as Mock).mockReturnValueOnce(transformMockReturnFixture);
@@ -24,7 +24,7 @@ describe(NormalizePhone.name, () => {
       NormalizePhone();
     });
 
-    afterAll(() => {
+    afterEach(() => {
       vi.clearAllMocks();
     });
 

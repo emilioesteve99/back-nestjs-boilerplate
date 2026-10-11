@@ -1,7 +1,6 @@
 import { Mocked } from 'vitest';
-
-import { CountManager } from './CountManager';
 import { CountAdapter } from '../adapter/CountAdapter';
+import { CountManager } from './CountManager';
 
 interface QueryTest {
   foo: any;
@@ -11,7 +10,7 @@ describe(CountManager.name, () => {
   let countAdapterMock: Mocked<CountAdapter<QueryTest>>;
   let countManager: CountManager<QueryTest>;
 
-  beforeAll(() => {
+  beforeEach(() => {
     countAdapterMock = {
       count: vi.fn(),
     };
@@ -25,7 +24,7 @@ describe(CountManager.name, () => {
       let countFixture: number;
       let result: unknown;
 
-      beforeAll(async () => {
+      beforeEach(async () => {
         queryTestFixture = {
           foo: 'foo',
         };
@@ -36,7 +35,7 @@ describe(CountManager.name, () => {
         result = await countManager.manage(queryTestFixture);
       });
 
-      afterAll(() => {
+      afterEach(() => {
         vi.clearAllMocks();
       });
 

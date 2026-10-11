@@ -1,6 +1,6 @@
-import { BaseEntitySetCommandFixtures } from './BaseEntitySetCommandFixtures';
 import { BaseEntityUpdateOneCommand } from '../../../domain/command/BaseEntityUpdateOneCommand';
 import { BaseEntityFindQueryFixtures } from '../query/BaseEntityFindQueryFixtures';
+import { BaseEntitySetCommandFixtures } from './BaseEntitySetCommandFixtures';
 
 export class BaseEntityUpdateOneCommandFixtures {
   public static get any(): BaseEntityUpdateOneCommand {

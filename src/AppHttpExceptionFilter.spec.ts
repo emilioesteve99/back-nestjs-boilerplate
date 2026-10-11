@@ -5,17 +5,15 @@ import { Mock } from 'vitest';
 
 import { AppHttpExceptionFilter } from './AppHttpExceptionFilter';
 
-vi.mock('elastic-apm-node', () => {
-  return {
-    captureError: vi.fn(),
-  };
-});
+vi.mock('elastic-apm-node', () => ({
+  captureError: vi.fn(),
+}));
 
 describe(AppHttpExceptionFilter.name, () => {
-  let superCatchMock: Mock<[Error, ArgumentsHost], void>;
+  let superCatchMock: Mock<(...args: [Error, ArgumentsHost]) => void>;
   let appHttpExceptionFilter: AppHttpExceptionFilter;
 
-  beforeAll(() => {
+  beforeEach(() => {
     superCatchMock = vi.fn();
     BaseExceptionFilter.prototype.catch = superCatchMock;
     appHttpExceptionFilter = new AppHttpExceptionFilter();
@@ -26,14 +24,14 @@ describe(AppHttpExceptionFilter.name, () => {
       let exceptionFixture: Error;
       let hostFixture: ArgumentsHost;
 
-      beforeAll(() => {
+      beforeEach(() => {
         exceptionFixture = new Error();
         hostFixture = {} as ArgumentsHost;
 
         appHttpExceptionFilter.catch(exceptionFixture, hostFixture);
       });
 
-      afterAll(() => {
+      afterEach(() => {
         vi.clearAllMocks();
       });
 

@@ -1,9 +1,8 @@
 import { EntityRepository, FindOptions, ObjectQuery } from '@mikro-orm/core';
 import { Mocked } from 'vitest';
-
-import { PaginateFindMikroOrmAdapter } from './PaginateFindMikroOrmAdapter';
 import { ConverterAsync } from '../../../domain/converter/ConverterAsync';
 import { Pagination } from '../../../domain/model/Pagination';
+import { PaginateFindMikroOrmAdapter } from './PaginateFindMikroOrmAdapter';
 
 interface QueryTest {
   foo: any;
@@ -22,7 +21,7 @@ describe(PaginateFindMikroOrmAdapter.name, () => {
   >;
   let paginateFindMikroOrmAdapter: PaginateFindMikroOrmAdapter<QueryTest, ModelTest, ModelTest>;
 
-  beforeAll(() => {
+  beforeEach(() => {
     entityRepositoryMock = {
       findAndCount: vi.fn(),
     } as Partial<Mocked<EntityRepository<ModelTest>>> as Mocked<EntityRepository<ModelTest>>;
@@ -57,7 +56,7 @@ describe(PaginateFindMikroOrmAdapter.name, () => {
       let paginationModelTestFixture: Pagination<ModelTest>;
       let result: unknown;
 
-      beforeAll(async () => {
+      beforeEach(async () => {
         queryTestFixture = {
           foo: 'foo',
         };
@@ -90,7 +89,7 @@ describe(PaginateFindMikroOrmAdapter.name, () => {
         result = await paginateFindMikroOrmAdapter.paginateFind(queryTestFixture);
       });
 
-      afterAll(() => {
+      afterEach(() => {
         vi.clearAllMocks();
       });
 

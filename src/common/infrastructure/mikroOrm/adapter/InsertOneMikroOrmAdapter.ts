@@ -29,7 +29,8 @@ export class InsertOneMikroOrmAdapter<TCommand, TModelDb extends AnyEntity, TMod
     const entityManager: EntityManager = this.entityRepository.getEntityManager();
 
     try {
-      await entityManager.persistAndFlush(modelDb);
+      entityManager.persist(modelDb);
+      await entityManager.flush();
     } catch (error: unknown) {
       if (isPostgreSqlErrorWithErrorType(error, [PostgreSqlErrorType.FOREIGN_KEY_VIOLATION])) {
         throw new InvalidArgumentException('Foreign key violation');

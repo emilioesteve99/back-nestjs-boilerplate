@@ -1,11 +1,10 @@
 import { EntityData } from '@mikro-orm/core';
-import { afterAll, beforeAll, Mock } from 'vitest';
-
-import { BaseEntitySetCommandToBaseEntitySetQueryMikroOrmConverterAsync } from './BaseEntitySetCommandToBaseEntitySetQueryMikroOrmConverterAsync';
+import { Mock } from 'vitest';
 import { BaseEntitySetCommand } from '../../../domain/command/BaseEntitySetCommand';
 import { BaseEntitySetCommandFixtures } from '../../../fixtures/domain/command/BaseEntitySetCommandFixtures';
 import { BaseEntitySetQueryMikroOrmFixtures } from '../../../fixtures/infrastructure/mikroOrm/command/BaseEntitySetQueryMikroOrmFixtures';
 import { BaseEntityMikroOrm } from '../model/BaseEntityMikroOrm';
+import { BaseEntitySetCommandToBaseEntitySetQueryMikroOrmConverterAsync } from './BaseEntitySetCommandToBaseEntitySetQueryMikroOrmConverterAsync';
 
 class BaseEntitySetCommandToBaseEntitySetQueryMikroOrmConverterAsyncTest extends BaseEntitySetCommandToBaseEntitySetQueryMikroOrmConverterAsync<
   BaseEntitySetCommand,
@@ -13,8 +12,7 @@ class BaseEntitySetCommandToBaseEntitySetQueryMikroOrmConverterAsyncTest extends
 > {
   public constructor(
     private readonly convertToEntitySetQueryMikroOrmMock: Mock<
-      [BaseEntitySetCommand, EntityData<BaseEntityMikroOrm>],
-      Promise<EntityData<BaseEntityMikroOrm>>
+      (...args: [BaseEntitySetCommand, EntityData<BaseEntityMikroOrm>]) => Promise<EntityData<BaseEntityMikroOrm>>
     >,
   ) {
     super();
@@ -39,13 +37,12 @@ class BaseEntitySetCommandToBaseEntitySetQueryMikroOrmConverterAsyncTest extends
 
 describe(BaseEntitySetCommandToBaseEntitySetQueryMikroOrmConverterAsync.name, () => {
   let convertToEntitySetQueryMikroOrmMock: Mock<
-    [BaseEntitySetCommand, EntityData<BaseEntityMikroOrm>],
-    Promise<EntityData<BaseEntityMikroOrm>>
+    (...args: [BaseEntitySetCommand, EntityData<BaseEntityMikroOrm>]) => Promise<EntityData<BaseEntityMikroOrm>>
   >;
 
   let baseEntitySetCommandToBaseEntitySetQueryMikroOrmConverterAsyncTest: BaseEntitySetCommandToBaseEntitySetQueryMikroOrmConverterAsyncTest;
 
-  beforeAll(() => {
+  beforeEach(() => {
     convertToEntitySetQueryMikroOrmMock = vi.fn();
 
     baseEntitySetCommandToBaseEntitySetQueryMikroOrmConverterAsyncTest =
@@ -58,18 +55,17 @@ describe(BaseEntitySetCommandToBaseEntitySetQueryMikroOrmConverterAsync.name, ()
       let baseEntitySetQueryMikroOrmFixture: EntityData<BaseEntityMikroOrm>;
       let result: unknown;
 
-      beforeAll(async () => {
+      beforeEach(async () => {
         baseEntitySetCommandFixture = BaseEntitySetCommandFixtures.any;
         baseEntitySetQueryMikroOrmFixture = BaseEntitySetQueryMikroOrmFixtures.any;
 
         convertToEntitySetQueryMikroOrmMock.mockResolvedValueOnce(baseEntitySetQueryMikroOrmFixture);
 
-        result = await baseEntitySetCommandToBaseEntitySetQueryMikroOrmConverterAsyncTest.convert(
-          baseEntitySetCommandFixture,
-        );
+        result =
+          await baseEntitySetCommandToBaseEntitySetQueryMikroOrmConverterAsyncTest.convert(baseEntitySetCommandFixture);
       });
 
-      afterAll(() => {
+      afterEach(() => {
         vi.clearAllMocks();
       });
 
@@ -94,7 +90,7 @@ describe(BaseEntitySetCommandToBaseEntitySetQueryMikroOrmConverterAsync.name, ()
       let commandProperty: keyof BaseEntitySetCommand;
       let entityProperty: keyof EntityData<BaseEntityMikroOrm>;
 
-      beforeAll(() => {
+      beforeEach(() => {
         input = { foo: 'foo' };
         setQueryMikroOrm = {} as unknown as EntityData<BaseEntityMikroOrm>;
         commandProperty = 'foo' as unknown as never;
@@ -108,7 +104,7 @@ describe(BaseEntitySetCommandToBaseEntitySetQueryMikroOrmConverterAsync.name, ()
         );
       });
 
-      afterAll(() => {
+      afterEach(() => {
         vi.clearAllMocks();
       });
 

@@ -1,5 +1,5 @@
-import { BaseEntityInsertOneCommandFixtures } from './BaseEntityInsertOneCommandFixtures';
 import { BaseEntityInsertCommand } from '../../../domain/command/BaseEntityInsertCommand';
+import { BaseEntityInsertOneCommandFixtures } from './BaseEntityInsertOneCommandFixtures';
 
 export class BaseEntityInsertCommandFixtures {
   public static get any(): BaseEntityInsertCommand {
@@ -12,7 +12,7 @@ export class BaseEntityInsertCommandFixtures {
 
   public static get withCommandsNotEmpty(): BaseEntityInsertCommand {
     const baseEntityInsertCommand: BaseEntityInsertCommand = {
-      ...this.any,
+      ...BaseEntityInsertCommandFixtures.any,
       commands: [BaseEntityInsertOneCommandFixtures.any],
     };
 

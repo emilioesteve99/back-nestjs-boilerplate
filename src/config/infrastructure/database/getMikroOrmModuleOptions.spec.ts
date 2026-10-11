@@ -1,14 +1,13 @@
 import { MikroOrmModuleOptions } from '@mikro-orm/nestjs';
-
-import { DatabaseConfig } from './DatabaseConfig';
-import { getMikroOrmModuleOptions } from './getMikroOrmModuleOptions';
 import { DatabaseConfigFixtures } from '../../fixtures/infrastructure/database/DatabaseConfigFixtures';
 import { MikroOrmModuleOptionsFixtures } from '../../fixtures/infrastructure/mikroOrm/MikroOrmModuleOptionsFixtures';
+import { DatabaseConfig } from './DatabaseConfig';
+import { getMikroOrmModuleOptions } from './getMikroOrmModuleOptions';
 
 describe(getMikroOrmModuleOptions.name, () => {
   let mikroOrmConfig: DatabaseConfig;
 
-  beforeAll(() => {
+  beforeEach(() => {
     mikroOrmConfig = DatabaseConfigFixtures.any;
   });
 
@@ -16,13 +15,13 @@ describe(getMikroOrmModuleOptions.name, () => {
     let result: MikroOrmModuleOptions;
     let mikroOrmModuleOptionsFixture: MikroOrmModuleOptions;
 
-    beforeAll(() => {
+    beforeEach(() => {
       mikroOrmModuleOptionsFixture = MikroOrmModuleOptionsFixtures.any;
 
       result = getMikroOrmModuleOptions(mikroOrmConfig);
     });
 
-    afterAll(() => {
+    afterEach(() => {
       vi.clearAllMocks();
     });
 

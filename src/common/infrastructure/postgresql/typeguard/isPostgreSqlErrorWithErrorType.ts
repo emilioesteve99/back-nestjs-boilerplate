@@ -1,6 +1,6 @@
-import { isPostgreSqlError } from './isPostgreSqlError';
 import { PostgreSqlError } from '../model/PostgreSqlError';
 import { PostgreSqlErrorType } from '../model/PostgreSqlErrorType';
+import { isPostgreSqlError } from './isPostgreSqlError';
 
 export function isPostgreSqlErrorWithErrorType<TErrorTypes extends PostgreSqlErrorType[]>(
   value: unknown,

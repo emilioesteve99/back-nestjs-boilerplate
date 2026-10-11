@@ -1,7 +1,6 @@
 import { FindOneOptions } from '@mikro-orm/core';
-
-import { BaseEntityQueryOrderMapMikroOrmFixtures } from './BaseEntityQueryOrderMapMikroOrmFixtures';
 import { BaseEntityMikroOrm } from '../../../../infrastructure/mikroOrm/model/BaseEntityMikroOrm';
+import { BaseEntityQueryOrderMapMikroOrmFixtures } from './BaseEntityQueryOrderMapMikroOrmFixtures';
 
 export class BaseEntityFindOneOptionsQueryMikroOrmFixtures {
   public static get any(): FindOneOptions<BaseEntityMikroOrm> {

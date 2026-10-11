@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
-
-import { ManagerAsync } from './ManagerAsync';
 import { CountAdapter } from '../adapter/CountAdapter';
+import { ManagerAsync } from './ManagerAsync';
 
 @Injectable()
 export class CountManager<TQuery> implements ManagerAsync<TQuery, number> {

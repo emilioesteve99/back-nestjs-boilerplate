@@ -1,11 +1,10 @@
 import { RequiredEntityData } from '@mikro-orm/core';
 import { Mock } from 'vitest';
-
-import { BaseEntityInsertOneCommandToBaseEntityInsertOneQueryMikroOrmConverterAsync } from './BaseEntityInsertOneCommandToBaseEntityInsertOneQueryMikroOrmConverterAsync';
 import { BaseEntityInsertOneCommand } from '../../../domain/command/BaseEntityInsertOneCommand';
 import { BaseEntityInsertOneCommandFixtures } from '../../../fixtures/domain/command/BaseEntityInsertOneCommandFixtures';
 import { BaseEntityInsertOneQueryMikroOrmFixtures } from '../../../fixtures/infrastructure/mikroOrm/command/BaseEntityInsertOneQueryMikroOrmFixtures';
 import { BaseEntityMikroOrm } from '../model/BaseEntityMikroOrm';
+import { BaseEntityInsertOneCommandToBaseEntityInsertOneQueryMikroOrmConverterAsync } from './BaseEntityInsertOneCommandToBaseEntityInsertOneQueryMikroOrmConverterAsync';
 
 class BaseEntityInsertOneCommandToBaseEntityInsertOneQueryMikroOrmConverterAsyncTest extends BaseEntityInsertOneCommandToBaseEntityInsertOneQueryMikroOrmConverterAsync<
   BaseEntityInsertOneCommand,
@@ -13,8 +12,9 @@ class BaseEntityInsertOneCommandToBaseEntityInsertOneQueryMikroOrmConverterAsync
 > {
   public constructor(
     private readonly convertToEntityInsertOneQueryMikroOrmMock: Mock<
-      [BaseEntityInsertOneCommand, RequiredEntityData<BaseEntityMikroOrm>],
-      Promise<RequiredEntityData<BaseEntityMikroOrm>>
+      (
+        ...args: [BaseEntityInsertOneCommand, RequiredEntityData<BaseEntityMikroOrm>]
+      ) => Promise<RequiredEntityData<BaseEntityMikroOrm>>
     >,
   ) {
     super();
@@ -30,13 +30,14 @@ class BaseEntityInsertOneCommandToBaseEntityInsertOneQueryMikroOrmConverterAsync
 
 describe(BaseEntityInsertOneCommandToBaseEntityInsertOneQueryMikroOrmConverterAsync.name, () => {
   let convertToEntityInsertOneQueryMikroOrmMock: Mock<
-    [BaseEntityInsertOneCommand, RequiredEntityData<BaseEntityMikroOrm>],
-    Promise<RequiredEntityData<BaseEntityMikroOrm>>
+    (
+      ...args: [BaseEntityInsertOneCommand, RequiredEntityData<BaseEntityMikroOrm>]
+    ) => Promise<RequiredEntityData<BaseEntityMikroOrm>>
   >;
 
   let baseEntityInsertOneCommandToBaseEntityInsertOneQueryMikroOrmConverterAsyncTest: BaseEntityInsertOneCommandToBaseEntityInsertOneQueryMikroOrmConverterAsyncTest;
 
-  beforeAll(() => {
+  beforeEach(() => {
     convertToEntityInsertOneQueryMikroOrmMock = vi.fn();
 
     baseEntityInsertOneCommandToBaseEntityInsertOneQueryMikroOrmConverterAsyncTest =
@@ -51,7 +52,7 @@ describe(BaseEntityInsertOneCommandToBaseEntityInsertOneQueryMikroOrmConverterAs
       let baseEntityInsertOneQueryMikroOrmFixture: RequiredEntityData<BaseEntityMikroOrm>;
       let result: unknown;
 
-      beforeAll(async () => {
+      beforeEach(async () => {
         baseEntityInsertOneCommandFixture = BaseEntityInsertOneCommandFixtures.any;
         baseEntityInsertOneQueryMikroOrmFixture = BaseEntityInsertOneQueryMikroOrmFixtures.any;
 
@@ -62,7 +63,7 @@ describe(BaseEntityInsertOneCommandToBaseEntityInsertOneQueryMikroOrmConverterAs
         );
       });
 
-      afterAll(() => {
+      afterEach(() => {
         vi.clearAllMocks();
       });
 

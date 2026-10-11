@@ -1,7 +1,6 @@
 import { Mocked } from 'vitest';
-
-import { DeleteCommandHandler } from './DeleteCommandHandler';
 import { ManagerAsync } from '../../domain/manager/ManagerAsync';
+import { DeleteCommandHandler } from './DeleteCommandHandler';
 
 interface CommandTest {
   foo: any;
@@ -11,7 +10,7 @@ describe(DeleteCommandHandler.name, () => {
   let deleteManagerMock: Mocked<ManagerAsync<CommandTest, void>>;
   let deleteCommandHandler: DeleteCommandHandler<CommandTest>;
 
-  beforeAll(() => {
+  beforeEach(() => {
     deleteManagerMock = {
       manage: vi.fn(),
     };
@@ -23,7 +22,7 @@ describe(DeleteCommandHandler.name, () => {
     describe('when called', () => {
       let commandTestFixture: CommandTest;
 
-      beforeAll(async () => {
+      beforeEach(async () => {
         commandTestFixture = {
           foo: 'foo',
         };
@@ -31,7 +30,7 @@ describe(DeleteCommandHandler.name, () => {
         await deleteCommandHandler.execute(commandTestFixture);
       });
 
-      afterAll(() => {
+      afterEach(() => {
         vi.clearAllMocks();
       });
 

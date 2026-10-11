@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { IQuery, IQueryHandler } from '@nestjs/cqrs';
+import { IQuery } from '@nestjs/cqrs';
 
 import { Manager } from '../../domain/manager/Manager';
 import { ManagerAsync } from '../../domain/manager/ManagerAsync';
 
 @Injectable()
-export class FindOneQueryHandler<TQuery extends IQuery, TModel> implements IQueryHandler<TQuery, TModel | undefined> {
+export class FindOneQueryHandler<TQuery extends IQuery, TModel> {
   public constructor(
     private readonly findOneManager: Manager<TQuery, TModel | undefined> | ManagerAsync<TQuery, TModel | undefined>,
   ) {}

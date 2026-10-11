@@ -1,13 +1,12 @@
 import { EntityRepository, ObjectQuery } from '@mikro-orm/core';
 import { Mock, Mocked } from 'vitest';
-
-import { DeleteMikroOrmAdapter } from './DeleteMikroOrmAdapter';
 import { ConverterAsync } from '../../../domain/converter/ConverterAsync';
 import { InvalidArgumentException } from '../../../domain/exception/InvalidArgumentException';
 import { PostgreSqlErrorFixtures } from '../../../fixtures/infrastructure/postgresql/model/PostgreSqlErrorFixtures';
 import { PostgreSqlError } from '../../postgresql/model/PostgreSqlError';
 import { PostgreSqlErrorType } from '../../postgresql/model/PostgreSqlErrorType';
 import { isPostgreSqlErrorWithErrorType } from '../../postgresql/typeguard/isPostgreSqlErrorWithErrorType';
+import { DeleteMikroOrmAdapter } from './DeleteMikroOrmAdapter';
 
 vi.mock('../../postgresql/typeguard/isPostgreSqlErrorWithErrorType');
 
@@ -24,7 +23,7 @@ describe(DeleteMikroOrmAdapter.name, () => {
   let commandTestToDeleteQueryMikroOrmConverterAsyncMock: Mocked<ConverterAsync<CommandTest, ObjectQuery<ModelTest>>>;
   let deleteMikroOrmAdapter: DeleteMikroOrmAdapter<CommandTest, ModelTest>;
 
-  beforeAll(() => {
+  beforeEach(() => {
     entityRepositoryMock = {
       nativeDelete: vi.fn(),
     } as Partial<Mocked<EntityRepository<ModelTest>>> as Mocked<EntityRepository<ModelTest>>;
@@ -44,7 +43,7 @@ describe(DeleteMikroOrmAdapter.name, () => {
       let commandTestFixture: CommandTest;
       let deleteQueryMikroOrmTestFixture: ObjectQuery<ModelTest>;
 
-      beforeAll(async () => {
+      beforeEach(async () => {
         commandTestFixture = {
           foo: 'foo',
         };
@@ -59,7 +58,7 @@ describe(DeleteMikroOrmAdapter.name, () => {
         await deleteMikroOrmAdapter.delete(commandTestFixture);
       });
 
-      afterAll(() => {
+      afterEach(() => {
         vi.clearAllMocks();
       });
 
@@ -80,7 +79,7 @@ describe(DeleteMikroOrmAdapter.name, () => {
       let errorFixture: PostgreSqlError;
       let result: unknown;
 
-      beforeAll(async () => {
+      beforeEach(async () => {
         commandTestFixture = {
           foo: 'foo',
         };
@@ -102,7 +101,7 @@ describe(DeleteMikroOrmAdapter.name, () => {
         }
       });
 
-      afterAll(() => {
+      afterEach(() => {
         vi.clearAllMocks();
       });
 
@@ -135,7 +134,7 @@ describe(DeleteMikroOrmAdapter.name, () => {
       let errorFixture: unknown;
       let result: unknown;
 
-      beforeAll(async () => {
+      beforeEach(async () => {
         commandTestFixture = {
           foo: 'foo',
         };
@@ -157,7 +156,7 @@ describe(DeleteMikroOrmAdapter.name, () => {
         }
       });
 
-      afterAll(() => {
+      afterEach(() => {
         vi.clearAllMocks();
       });
 

@@ -1,7 +1,6 @@
 import { Mocked } from 'vitest';
-
-import { DeleteManager } from './DeleteManager';
 import { DeleteAdapter } from '../adapter/DeleteAdapter';
+import { DeleteManager } from './DeleteManager';
 
 interface CommandTest {
   foo: any;
@@ -11,7 +10,7 @@ describe(DeleteManager.name, () => {
   let deleteAdapterMock: Mocked<DeleteAdapter<CommandTest>>;
   let deleteManager: DeleteManager<CommandTest>;
 
-  beforeAll(() => {
+  beforeEach(() => {
     deleteAdapterMock = {
       delete: vi.fn(),
     };
@@ -23,13 +22,13 @@ describe(DeleteManager.name, () => {
     describe('when called', () => {
       let commandTestFixture: CommandTest;
 
-      beforeAll(async () => {
+      beforeEach(async () => {
         commandTestFixture = { foo: 'foo' };
 
         await deleteManager.manage(commandTestFixture);
       });
 
-      afterAll(() => {
+      afterEach(() => {
         vi.clearAllMocks();
       });
 

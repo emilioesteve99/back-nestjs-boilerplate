@@ -1,8 +1,7 @@
 import { Validate } from 'class-validator';
 import { Mock } from 'vitest';
-
-import { IsGreaterThanOrEqualTo } from './IsGreaterThanOrEqualTo';
 import { GreaterThanOrEqualToValidatorConstraint } from '../validatorConstraint/GreaterThanOrEqualToValidatorConstraint';
+import { IsGreaterThanOrEqualTo } from './IsGreaterThanOrEqualTo';
 
 vi.mock('class-validator', async () => {
   const classValidatorCommon: object = await vi.importActual('class-validator');
@@ -19,7 +18,7 @@ describe(IsGreaterThanOrEqualTo.name, () => {
     let propertyKey: string;
     let result: unknown;
 
-    beforeAll(async () => {
+    beforeEach(async () => {
       propertyDecoratorFixture = () => {};
 
       propertyKey = 'numberToCompare';
@@ -29,7 +28,7 @@ describe(IsGreaterThanOrEqualTo.name, () => {
       result = IsGreaterThanOrEqualTo(propertyKey);
     });
 
-    afterAll(() => {
+    afterEach(() => {
       vi.clearAllMocks();
     });
 

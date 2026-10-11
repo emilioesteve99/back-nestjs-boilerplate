@@ -1,5 +1,5 @@
-import { BaseEntitySetCommand } from './BaseEntitySetCommand';
 import { BaseEntityFindQuery } from '../query/BaseEntityFindQuery';
+import { BaseEntitySetCommand } from './BaseEntitySetCommand';
 
 export interface BaseEntityUpdateOneCommand {
   findQuery: BaseEntityFindQuery;

@@ -1,19 +1,19 @@
-import { randomUUID } from 'crypto';
-
-import { Entity, OptionalProps, PrimaryKey, Property } from '@mikro-orm/core';
+import { randomUUID } from 'node:crypto';
+import { OptionalProps } from '@mikro-orm/core';
+import { Entity, PrimaryKey, Property } from '@mikro-orm/decorators/legacy';
 
 type BaseEntityMikroOrmOptionalProps = 'createdAt' | 'updatedAt';
 
 @Entity({ abstract: true })
 export class BaseEntityMikroOrm {
-  [OptionalProps]?: BaseEntityMikroOrmOptionalProps;
+  public [OptionalProps]?: BaseEntityMikroOrmOptionalProps;
 
   @Property({ length: 3, name: 'created_at', onCreate: () => new Date(), type: 'datetime' })
-  createdAt!: Date;
+  public createdAt!: Date;
 
   @PrimaryKey({ name: 'id', type: 'uuid' })
-  id: string = randomUUID();
+  public id: string = randomUUID();
 
-  @Property({ length: 3, name: 'created_at', nullable: true, onUpdate: () => new Date(), type: 'datetime' })
-  updatedAt?: Date;
+  @Property({ length: 3, name: 'updated_at', nullable: true, onUpdate: () => new Date(), type: 'datetime' })
+  public updatedAt?: Date;
 }

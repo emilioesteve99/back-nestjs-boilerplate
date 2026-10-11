@@ -1,7 +1,9 @@
 {
   "extends": "./tsconfig.json",
-  "exclude": ["node_modules", "src/common/infrastructure/mikroOrm/migrations"],
+  "exclude": ["node_modules", "src/common/infrastructure/mikroOrm/migrations", "**/*.spec.ts", "**/fixtures/**"],
   "compilerOptions": {
-    "outDir": "./dist"
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "types": ["node"]
   }
 }

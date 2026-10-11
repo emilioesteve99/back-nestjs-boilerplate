@@ -1,13 +1,12 @@
 import { FindOptions } from '@mikro-orm/core';
 import { Mocked } from 'vitest';
-
-import { AnyEntityPaginateFindQueryToAnyEntityFindOptionsQueryMikroOrmConverterAsync } from './AnyEntityPaginateFindQueryToAnyEntityFindOptionsQueryMikroOrmConverterAsync';
 import { ConverterAsync } from '../../../domain/converter/ConverterAsync';
 import { AnyEntityFindQuery } from '../../../domain/query/AnyEntityFindQuery';
 import { AnyEntityPaginateFindQuery } from '../../../domain/query/AnyEntityPaginateFindQuery';
 import { AnyEntityPaginateFindQueryFixtures } from '../../../fixtures/domain/query/AnyEntityPaginateFindQueryFixtures';
 import { AnyEntityFindOptionsQueryMikroOrmFixtures } from '../../../fixtures/infrastructure/mikroOrm/query/AnyEntityFindOptionsQueryMikroOrmFixtures';
 import { AnyEntityMikroOrm } from '../model/AnyEntityMikroOrm';
+import { AnyEntityPaginateFindQueryToAnyEntityFindOptionsQueryMikroOrmConverterAsync } from './AnyEntityPaginateFindQueryToAnyEntityFindOptionsQueryMikroOrmConverterAsync';
 
 describe(AnyEntityPaginateFindQueryToAnyEntityFindOptionsQueryMikroOrmConverterAsync.name, () => {
   let anyEntityFindQueryToAnyEntityFindOptionsQueryMikroOrmConverterAsyncMock: Mocked<
@@ -18,7 +17,7 @@ describe(AnyEntityPaginateFindQueryToAnyEntityFindOptionsQueryMikroOrmConverterA
     FindOptions<AnyEntityMikroOrm>
   >;
 
-  beforeAll(() => {
+  beforeEach(() => {
     anyEntityFindQueryToAnyEntityFindOptionsQueryMikroOrmConverterAsyncMock = {
       convert: vi.fn(),
     };
@@ -36,7 +35,7 @@ describe(AnyEntityPaginateFindQueryToAnyEntityFindOptionsQueryMikroOrmConverterA
       let anyEntityFindOptionsQueryMikroOrmFixtureWithLimitAndOffset: FindOptions<AnyEntityMikroOrm>;
       let result: unknown;
 
-      beforeAll(async () => {
+      beforeEach(async () => {
         anyEntityPaginateFindQueryFixture = AnyEntityPaginateFindQueryFixtures.any;
         anyEntityFindOptionsQueryMikroOrmFixture = AnyEntityFindOptionsQueryMikroOrmFixtures.any;
         anyEntityFindOptionsQueryMikroOrmFixtureWithLimitAndOffset =
@@ -51,7 +50,7 @@ describe(AnyEntityPaginateFindQueryToAnyEntityFindOptionsQueryMikroOrmConverterA
         );
       });
 
-      afterAll(() => {
+      afterEach(() => {
         vi.clearAllMocks();
       });
 

@@ -6,7 +6,7 @@ export function normalizePhoneTransform(params: TransformFnParams): string {
 
   try {
     phone = params.obj[params.key]!.replace(/[^+0-9]/g, '');
-  } catch (_: unknown) {
+  } catch {
     throw new BadRequestException(`${params.key} property must be a valid phone`);
   }
 

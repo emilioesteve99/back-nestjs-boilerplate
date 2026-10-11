@@ -1,8 +1,7 @@
 import { Mocked } from 'vitest';
-
-import { PaginateFindManager } from './PaginateFindManager';
 import { PaginateFindAdapter } from '../adapter/PaginateFindAdapter';
 import { Pagination } from '../model/Pagination';
+import { PaginateFindManager } from './PaginateFindManager';
 
 interface QueryTest {
   foo: any;
@@ -16,7 +15,7 @@ describe(PaginateFindManager.name, () => {
   let paginateFindAdapterMock: Mocked<PaginateFindAdapter<QueryTest, ModelTest>>;
   let paginateFindManager: PaginateFindManager<QueryTest, ModelTest>;
 
-  beforeAll(() => {
+  beforeEach(() => {
     paginateFindAdapterMock = {
       paginateFind: vi.fn(),
     };
@@ -30,7 +29,7 @@ describe(PaginateFindManager.name, () => {
       let paginationModelTestFixture: Pagination<ModelTest>;
       let result: unknown;
 
-      beforeAll(async () => {
+      beforeEach(async () => {
         queryTestFixture = {
           foo: 'foo',
         };
@@ -54,7 +53,7 @@ describe(PaginateFindManager.name, () => {
         result = await paginateFindManager.manage(queryTestFixture);
       });
 
-      afterAll(() => {
+      afterEach(() => {
         vi.clearAllMocks();
       });
 

@@ -1,7 +1,6 @@
 import { RequiredEntityData } from '@mikro-orm/core';
-
-import { BaseEntityInsertOneQueryMikroOrmFixtures } from './BaseEntityInsertOneQueryMikroOrmFixtures';
 import { BaseEntityMikroOrm } from '../../../../infrastructure/mikroOrm/model/BaseEntityMikroOrm';
+import { BaseEntityInsertOneQueryMikroOrmFixtures } from './BaseEntityInsertOneQueryMikroOrmFixtures';
 
 export class BaseEntityInsertQueryMikroOrmFixtures {
   public static get any(): RequiredEntityData<BaseEntityMikroOrm>[] {
@@ -12,7 +11,7 @@ export class BaseEntityInsertQueryMikroOrmFixtures {
 
   public static get withBaseEntityInsertOneQueryMikroOrm(): RequiredEntityData<BaseEntityMikroOrm>[] {
     const baseEntityInsertQueryMikroOrm: RequiredEntityData<BaseEntityMikroOrm>[] = [
-      ...this.any,
+      ...BaseEntityInsertQueryMikroOrmFixtures.any,
       BaseEntityInsertOneQueryMikroOrmFixtures.any,
     ];
 

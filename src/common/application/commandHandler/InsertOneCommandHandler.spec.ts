@@ -1,7 +1,6 @@
 import { Mocked } from 'vitest';
-
-import { InsertOneCommandHandler } from './InsertOneCommandHandler';
 import { ManagerAsync } from '../../domain/manager/ManagerAsync';
+import { InsertOneCommandHandler } from './InsertOneCommandHandler';
 
 interface CommandTest {
   foo: any;
@@ -15,7 +14,7 @@ describe(InsertOneCommandHandler.name, () => {
   let insertOneManagerMock: Mocked<ManagerAsync<CommandTest, ModelTest>>;
   let insertOneCommandHandler: InsertOneCommandHandler<CommandTest, ModelTest>;
 
-  beforeAll(() => {
+  beforeEach(() => {
     insertOneManagerMock = {
       manage: vi.fn(),
     };
@@ -29,7 +28,7 @@ describe(InsertOneCommandHandler.name, () => {
       let modelTestFixture: ModelTest;
       let result: unknown;
 
-      beforeAll(async () => {
+      beforeEach(async () => {
         commandTestFixture = {
           foo: 'foo',
         };
@@ -42,7 +41,7 @@ describe(InsertOneCommandHandler.name, () => {
         result = await insertOneCommandHandler.execute(commandTestFixture);
       });
 
-      afterAll(() => {
+      afterEach(() => {
         vi.clearAllMocks();
       });
 

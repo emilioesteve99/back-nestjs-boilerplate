@@ -1,11 +1,11 @@
-// eslint-disable-next-line import/order,@typescript-eslint/no-var-requires
-import { AppConfig } from './config/infrastructure/app/AppConfig';
+// eslint-disable-next-line import-x/order
+
 import { ValidationPipe, VersioningType } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify';
 import { FastifyError } from 'fastify';
-
 import { AppModule } from './AppModule';
+import { AppConfig } from './config/infrastructure/app/AppConfig';
 
 async function bootstrap(): Promise<void> {
   const app: NestFastifyApplication = await NestFactory.create<NestFastifyApplication>(

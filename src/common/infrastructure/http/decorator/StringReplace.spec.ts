@@ -16,7 +16,7 @@ describe(StringReplace.name, () => {
   let transformMockReturnFixture: PropertyDecorator;
 
   describe('when called', () => {
-    beforeAll(async () => {
+    beforeEach(async () => {
       transformMockReturnFixture = () => undefined;
 
       (Transform as unknown as Mock).mockReturnValueOnce(transformMockReturnFixture);
@@ -24,7 +24,7 @@ describe(StringReplace.name, () => {
       StringReplace('', '');
     });
 
-    afterAll(() => {
+    afterEach(() => {
       vi.clearAllMocks();
     });
 

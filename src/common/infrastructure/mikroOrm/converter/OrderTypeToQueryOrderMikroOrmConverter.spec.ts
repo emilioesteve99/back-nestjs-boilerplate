@@ -1,14 +1,13 @@
 import { QueryOrder } from '@mikro-orm/core';
-
-import { OrderTypeToQueryOrderMikroOrmConverter } from './OrderTypeToQueryOrderMikroOrmConverter';
 import { OrderType } from '../../../domain/model/OrderType';
 import { OrderTypeFixtures } from '../../../fixtures/domain/model/OrderTypeFixtures';
 import { QueryOrderMikroOrmFixtures } from '../../../fixtures/infrastructure/mikroOrm/query/QueryOrderMikroOrmFixtures';
+import { OrderTypeToQueryOrderMikroOrmConverter } from './OrderTypeToQueryOrderMikroOrmConverter';
 
 describe(OrderTypeToQueryOrderMikroOrmConverter.name, () => {
   let orderTypeToQueryOrderMikroOrmConverter: OrderTypeToQueryOrderMikroOrmConverter;
 
-  beforeAll(() => {
+  beforeEach(() => {
     orderTypeToQueryOrderMikroOrmConverter = new OrderTypeToQueryOrderMikroOrmConverter();
   });
 
@@ -18,14 +17,14 @@ describe(OrderTypeToQueryOrderMikroOrmConverter.name, () => {
       let queryOrderMikroOrmFixture: QueryOrder;
       let result: unknown;
 
-      beforeAll(() => {
+      beforeEach(() => {
         orderTypeFixture = OrderTypeFixtures.ASC;
         queryOrderMikroOrmFixture = QueryOrderMikroOrmFixtures.ASC;
 
         result = orderTypeToQueryOrderMikroOrmConverter.convert(orderTypeFixture);
       });
 
-      afterAll(() => {
+      afterEach(() => {
         vitest.clearAllMocks();
       });
 

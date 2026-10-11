@@ -1,17 +1,16 @@
 import { Mock } from 'vitest';
-
-import { BaseEntityMikroOrmToBaseEntityConverterAsync } from './BaseEntityMikroOrmToBaseEntityConverterAsync';
 import { BaseEntity } from '../../../domain/model/BaseEntity';
 import { BaseEntityFixtures } from '../../../fixtures/domain/model/BaseEntityFixtures';
 import { BaseEntityMikroOrmFixtures } from '../../../fixtures/infrastructure/mikroOrm/model/BaseEntityMikroOrmFixtures';
 import { BaseEntityMikroOrm } from '../model/BaseEntityMikroOrm';
+import { BaseEntityMikroOrmToBaseEntityConverterAsync } from './BaseEntityMikroOrmToBaseEntityConverterAsync';
 
 class BaseEntityMikroOrmToBaseEntityConverterAsyncTest extends BaseEntityMikroOrmToBaseEntityConverterAsync<
   BaseEntityMikroOrm,
   BaseEntity
 > {
   public constructor(
-    private readonly convertToEntityMock: Mock<[BaseEntityMikroOrm, BaseEntity], Promise<BaseEntity>>,
+    private readonly convertToEntityMock: Mock<(...args: [BaseEntityMikroOrm, BaseEntity]) => Promise<BaseEntity>>,
   ) {
     super();
   }
@@ -22,10 +21,10 @@ class BaseEntityMikroOrmToBaseEntityConverterAsyncTest extends BaseEntityMikroOr
 }
 
 describe(BaseEntityMikroOrmToBaseEntityConverterAsync.name, () => {
-  let convertToEntityMock: Mock<[BaseEntityMikroOrm, BaseEntity], Promise<BaseEntity>>;
+  let convertToEntityMock: Mock<(...args: [BaseEntityMikroOrm, BaseEntity]) => Promise<BaseEntity>>;
   let baseEntityMikroOrmToBaseEntityConverterAsyncTest: BaseEntityMikroOrmToBaseEntityConverterAsyncTest;
 
-  beforeAll(() => {
+  beforeEach(() => {
     convertToEntityMock = vi.fn();
 
     baseEntityMikroOrmToBaseEntityConverterAsyncTest = new BaseEntityMikroOrmToBaseEntityConverterAsyncTest(
@@ -39,7 +38,7 @@ describe(BaseEntityMikroOrmToBaseEntityConverterAsync.name, () => {
       let baseEntityFixture: BaseEntity;
       let result: unknown;
 
-      beforeAll(async () => {
+      beforeEach(async () => {
         baseEntityMikroOrmFixture = BaseEntityMikroOrmFixtures.any;
         baseEntityFixture = BaseEntityFixtures.any;
 
@@ -48,7 +47,7 @@ describe(BaseEntityMikroOrmToBaseEntityConverterAsync.name, () => {
         result = await baseEntityMikroOrmToBaseEntityConverterAsyncTest.convert(baseEntityMikroOrmFixture);
       });
 
-      afterAll(() => {
+      afterEach(() => {
         vi.clearAllMocks();
       });
 
@@ -67,7 +66,7 @@ describe(BaseEntityMikroOrmToBaseEntityConverterAsync.name, () => {
       let baseEntityFixture: BaseEntity;
       let result: unknown;
 
-      beforeAll(async () => {
+      beforeEach(async () => {
         baseEntityMikroOrmFixture = BaseEntityMikroOrmFixtures.withUpdatedAtAndUpdatedBy;
         baseEntityFixture = BaseEntityFixtures.withUpdatedAtAndUpdatedById;
 
@@ -76,7 +75,7 @@ describe(BaseEntityMikroOrmToBaseEntityConverterAsync.name, () => {
         result = await baseEntityMikroOrmToBaseEntityConverterAsyncTest.convert(baseEntityMikroOrmFixture);
       });
 
-      afterAll(() => {
+      afterEach(() => {
         vi.clearAllMocks();
       });
 

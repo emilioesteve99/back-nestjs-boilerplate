@@ -13,11 +13,11 @@ export function ErrorCatchingSaga<
   const injector: PropertyDecorator & ParameterDecorator = Inject(Logger);
   const saga: PropertyDecorator = Saga();
 
-  return function (
+  return (
     target: unknown,
     propertyKey: string | symbol,
     descriptor: TypedPropertyDescriptor<(input: TInput) => TOutput>,
-  ): TypedPropertyDescriptor<(input: TInput) => TOutput> {
+  ): TypedPropertyDescriptor<(input: TInput) => TOutput> => {
     const method: (input: TInput) => TOutput = descriptor.value!;
 
     injector(target as { logger: Logger }, 'logger');

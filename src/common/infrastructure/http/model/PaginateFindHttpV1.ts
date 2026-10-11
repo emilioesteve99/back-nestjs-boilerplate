@@ -10,11 +10,11 @@ export class PaginateFindHttpV1 {
   @IsInt()
   @Min(1)
   @LimitedMax(200)
-  limit: number = 10;
+  public limit: number = 10;
 
   @ApiPropertyOptional()
   @IsOptionalNotNull()
   @IsInt()
   @Min(1)
-  page: number = 1;
+  public page: number = 1;
 }

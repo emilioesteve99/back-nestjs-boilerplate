@@ -1,7 +1,6 @@
 import { Mocked } from 'vitest';
-
-import { FindManager } from './FindManager';
 import { FindAdapter } from '../adapter/FindAdapter';
+import { FindManager } from './FindManager';
 
 interface QueryTest {
   foo: any;
@@ -15,7 +14,7 @@ describe(FindManager.name, () => {
   let findAdapterMock: Mocked<FindAdapter<QueryTest, ModelTest>>;
   let findManager: FindManager<QueryTest, ModelTest>;
 
-  beforeAll(() => {
+  beforeEach(() => {
     findAdapterMock = {
       find: vi.fn(),
     };
@@ -29,7 +28,7 @@ describe(FindManager.name, () => {
       let modelTestFixtures: ModelTest[];
       let result: unknown;
 
-      beforeAll(async () => {
+      beforeEach(async () => {
         queryTestFixture = {
           foo: 'foo',
         };
@@ -44,7 +43,7 @@ describe(FindManager.name, () => {
         result = await findManager.manage(queryTestFixture);
       });
 
-      afterAll(() => {
+      afterEach(() => {
         vi.clearAllMocks();
       });
 

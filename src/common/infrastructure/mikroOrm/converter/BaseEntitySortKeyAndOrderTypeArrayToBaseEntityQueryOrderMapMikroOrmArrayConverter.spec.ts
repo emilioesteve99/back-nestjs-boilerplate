@@ -1,12 +1,11 @@
 import { QueryOrderMap } from '@mikro-orm/core';
 import { Mocked } from 'vitest';
-
-import { BaseEntitySortKeyAndOrderTypeArrayToBaseEntityQueryOrderMapMikroOrmArrayConverter } from './BaseEntitySortKeyAndOrderTypeArrayToBaseEntityQueryOrderMapMikroOrmArrayConverter';
 import { Converter } from '../../../domain/converter/Converter';
 import { BaseEntitySortKeyAndOrderType } from '../../../domain/model/BaseEntitySortKeyAndOrderType';
 import { BaseEntitySortKeyAndOrderTypeFixtures } from '../../../fixtures/domain/model/BaseEntitySortKeyAndOrderTypeFixtures';
 import { BaseEntityQueryOrderMapMikroOrmFixtures } from '../../../fixtures/infrastructure/mikroOrm/query/BaseEntityQueryOrderMapMikroOrmFixtures';
 import { BaseEntityMikroOrm } from '../model/BaseEntityMikroOrm';
+import { BaseEntitySortKeyAndOrderTypeArrayToBaseEntityQueryOrderMapMikroOrmArrayConverter } from './BaseEntitySortKeyAndOrderTypeArrayToBaseEntityQueryOrderMapMikroOrmArrayConverter';
 
 describe(BaseEntitySortKeyAndOrderTypeArrayToBaseEntityQueryOrderMapMikroOrmArrayConverter.name, () => {
   let baseEntitySortKeyAndOrderTypeOfToBaseEntityQueryOrderMapMikroOrmConverterMock: Mocked<
@@ -17,7 +16,7 @@ describe(BaseEntitySortKeyAndOrderTypeArrayToBaseEntityQueryOrderMapMikroOrmArra
     QueryOrderMap<BaseEntityMikroOrm>[]
   >;
 
-  beforeAll(() => {
+  beforeEach(() => {
     baseEntitySortKeyAndOrderTypeOfToBaseEntityQueryOrderMapMikroOrmConverterMock = {
       convert: vi.fn(),
     };
@@ -34,7 +33,7 @@ describe(BaseEntitySortKeyAndOrderTypeArrayToBaseEntityQueryOrderMapMikroOrmArra
       let baseEntityQueryOrderMapMikroOrmFixture: QueryOrderMap<BaseEntityMikroOrm>;
       let result: unknown;
 
-      beforeAll(() => {
+      beforeEach(() => {
         baseEntitySortKeyAndOrderTypeFixture = BaseEntitySortKeyAndOrderTypeFixtures.withId;
         baseEntityQueryOrderMapMikroOrmFixture = BaseEntityQueryOrderMapMikroOrmFixtures.withId;
 
@@ -47,7 +46,7 @@ describe(BaseEntitySortKeyAndOrderTypeArrayToBaseEntityQueryOrderMapMikroOrmArra
         ]);
       });
 
-      afterAll(() => {
+      afterEach(() => {
         vi.clearAllMocks();
       });
 

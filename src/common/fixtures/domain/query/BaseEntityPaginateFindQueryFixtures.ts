@@ -1,5 +1,5 @@
-import { BaseEntityFindQueryFixtures } from './BaseEntityFindQueryFixtures';
 import { BaseEntityPaginateFindQuery } from '../../../domain/query/BaseEntityPaginateFindQuery';
+import { BaseEntityFindQueryFixtures } from './BaseEntityFindQueryFixtures';
 
 export class BaseEntityPaginateFindQueryFixtures {
   public static get any(): BaseEntityPaginateFindQuery {

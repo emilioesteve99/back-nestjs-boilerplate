@@ -6,7 +6,7 @@ export function parseBooleanTransform(params: TransformFnParams): boolean {
 
   try {
     boolean = Boolean(JSON.parse(params.obj[params.key]));
-  } catch (error) {
+  } catch {
     throw new BadRequestException(`${params.key} property must be a valid boolean`);
   }
 

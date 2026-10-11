@@ -1,8 +1,7 @@
 import { EntityRepository, FindOptions, ObjectQuery } from '@mikro-orm/core';
 import { Mocked } from 'vitest';
-
-import { FindMikroOrmAdapter } from './FindMikroOrmAdapter';
 import { ConverterAsync } from '../../../domain/converter/ConverterAsync';
+import { FindMikroOrmAdapter } from './FindMikroOrmAdapter';
 
 interface QueryTest {
   foo: any;
@@ -19,7 +18,7 @@ describe(FindMikroOrmAdapter.name, () => {
   let modelDbToModelConverterAsyncMock: Mocked<ConverterAsync<ModelTest, ModelTest>>;
   let findMikroOrmAdapter: FindMikroOrmAdapter<QueryTest, ModelTest, ModelTest>;
 
-  beforeAll(() => {
+  beforeEach(() => {
     entityRepositoryMock = {
       find: vi.fn(),
     } as Partial<Mocked<EntityRepository<ModelTest>>> as Mocked<EntityRepository<ModelTest>>;
@@ -53,7 +52,7 @@ describe(FindMikroOrmAdapter.name, () => {
       let modelTestFixtures: ModelTest[];
       let result: unknown;
 
-      beforeAll(async () => {
+      beforeEach(async () => {
         queryTestFixture = {
           foo: 'foo',
         };
@@ -74,7 +73,7 @@ describe(FindMikroOrmAdapter.name, () => {
         result = await findMikroOrmAdapter.find(queryTestFixture);
       });
 
-      afterAll(() => {
+      afterEach(() => {
         vi.clearAllMocks();
       });
 

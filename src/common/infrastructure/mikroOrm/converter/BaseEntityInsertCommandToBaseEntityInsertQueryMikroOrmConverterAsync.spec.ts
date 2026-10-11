@@ -1,13 +1,12 @@
 import { RequiredEntityData } from '@mikro-orm/core';
 import { Mocked } from 'vitest';
-
-import { BaseEntityInsertCommandToBaseEntityInsertQueryMikroOrmConverterAsync } from './BaseEntityInsertCommandToBaseEntityInsertQueryMikroOrmConverterAsync';
 import { BaseEntityInsertCommand } from '../../../domain/command/BaseEntityInsertCommand';
 import { BaseEntityInsertOneCommand } from '../../../domain/command/BaseEntityInsertOneCommand';
 import { ConverterAsync } from '../../../domain/converter/ConverterAsync';
 import { BaseEntityInsertCommandFixtures } from '../../../fixtures/domain/command/BaseEntityInsertCommandFixtures';
 import { BaseEntityInsertQueryMikroOrmFixtures } from '../../../fixtures/infrastructure/mikroOrm/command/BaseEntityInsertQueryMikroOrmFixtures';
 import { BaseEntityMikroOrm } from '../model/BaseEntityMikroOrm';
+import { BaseEntityInsertCommandToBaseEntityInsertQueryMikroOrmConverterAsync } from './BaseEntityInsertCommandToBaseEntityInsertQueryMikroOrmConverterAsync';
 
 describe(BaseEntityInsertCommandToBaseEntityInsertQueryMikroOrmConverterAsync.name, () => {
   let baseEntityInsertOneCommandToBaseEntityInsertOneQueryMikroOrmConverterAsyncMock: Mocked<
@@ -19,7 +18,7 @@ describe(BaseEntityInsertCommandToBaseEntityInsertQueryMikroOrmConverterAsync.na
     RequiredEntityData<BaseEntityMikroOrm>[]
   >;
 
-  beforeAll(() => {
+  beforeEach(() => {
     baseEntityInsertOneCommandToBaseEntityInsertOneQueryMikroOrmConverterAsyncMock = {
       convert: vi.fn(),
     };
@@ -36,7 +35,7 @@ describe(BaseEntityInsertCommandToBaseEntityInsertQueryMikroOrmConverterAsync.na
       let baseEntityInsertQueryMikroOrmFixture: RequiredEntityData<BaseEntityMikroOrm>[];
       let result: unknown;
 
-      beforeAll(async () => {
+      beforeEach(async () => {
         baseEntityInsertCommandFixture = BaseEntityInsertCommandFixtures.withCommandsNotEmpty;
         baseEntityInsertQueryMikroOrmFixture =
           BaseEntityInsertQueryMikroOrmFixtures.withBaseEntityInsertOneQueryMikroOrm;
@@ -47,12 +46,13 @@ describe(BaseEntityInsertCommandToBaseEntityInsertQueryMikroOrmConverterAsync.na
           );
         }
 
-        result = await baseEntityInsertCommandToBaseEntityInsertQueryMikroOrmConverterAsync.convert(
-          baseEntityInsertCommandFixture,
-        );
+        result =
+          await baseEntityInsertCommandToBaseEntityInsertQueryMikroOrmConverterAsync.convert(
+            baseEntityInsertCommandFixture,
+          );
       });
 
-      afterAll(() => {
+      afterEach(() => {
         vi.clearAllMocks();
       });
 

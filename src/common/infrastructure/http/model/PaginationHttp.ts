@@ -4,8 +4,8 @@ import { PaginationMetaHttp } from './PaginationMetaHttp';
 
 export class PaginationHttp<TModel> {
   @ApiProperty()
-  items!: TModel[];
+  public items!: TModel[];
 
   @ApiProperty()
-  meta!: PaginationMetaHttp;
+  public meta!: PaginationMetaHttp;
 }

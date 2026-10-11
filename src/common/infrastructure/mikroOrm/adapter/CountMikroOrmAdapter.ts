@@ -12,9 +12,8 @@ export class CountMikroOrmAdapter<TQuery, TModelDb extends AnyEntity> implements
   ) {}
 
   public async count(query: TQuery): Promise<number> {
-    const findQueryMikroOrm: ObjectQuery<TModelDb> = await this.countQueryToFindQueryMikroOrmConverterAsync.convert(
-      query,
-    );
+    const findQueryMikroOrm: ObjectQuery<TModelDb> =
+      await this.countQueryToFindQueryMikroOrmConverterAsync.convert(query);
 
     const count: number = await this.entityRepository.count(findQueryMikroOrm);
 

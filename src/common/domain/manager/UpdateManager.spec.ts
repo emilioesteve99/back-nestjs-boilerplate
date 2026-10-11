@@ -1,7 +1,6 @@
 import { Mocked } from 'vitest';
-
-import { UpdateManager } from './UpdateManager';
 import { UpdateAdapter } from '../adapter/UpdateAdapter';
+import { UpdateManager } from './UpdateManager';
 
 interface CommandTest {
   foo: any;
@@ -11,7 +10,7 @@ describe(UpdateManager.name, () => {
   let updateAdapterMock: Mocked<UpdateAdapter<CommandTest>>;
   let updateManager: UpdateManager<CommandTest>;
 
-  beforeAll(() => {
+  beforeEach(() => {
     updateAdapterMock = {
       update: vi.fn(),
     };
@@ -23,13 +22,13 @@ describe(UpdateManager.name, () => {
     describe('when called', () => {
       let commandTestFixture: CommandTest;
 
-      beforeAll(async () => {
+      beforeEach(async () => {
         commandTestFixture = { foo: 'foo' };
 
         await updateManager.manage(commandTestFixture);
       });
 
-      afterAll(() => {
+      afterEach(() => {
         vi.clearAllMocks();
       });
 

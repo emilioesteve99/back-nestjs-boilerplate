@@ -1,13 +1,12 @@
 import { ObjectQuery } from '@mikro-orm/core';
 import { Mocked } from 'vitest';
-
-import { BaseEntityUpdateCommandToBaseEntityFindQueryMikroOrmConverterAsync } from './BaseEntityUpdateCommandToBaseEntityFindQueryMikroOrmConverterAsync';
 import { BaseEntityUpdateCommand } from '../../../domain/command/BaseEntityUpdateCommand';
 import { BaseEntityUpdateOneCommand } from '../../../domain/command/BaseEntityUpdateOneCommand';
 import { ConverterAsync } from '../../../domain/converter/ConverterAsync';
 import { BaseEntityUpdateOneCommandFixtures } from '../../../fixtures/domain/command/BaseEntityUpdateOneCommandFixtures';
 import { BaseEntityFindQueryMikroOrmFixtures } from '../../../fixtures/infrastructure/mikroOrm/query/BaseEntityFindQueryMikroOrmFixtures';
 import { BaseEntityMikroOrm } from '../model/BaseEntityMikroOrm';
+import { BaseEntityUpdateCommandToBaseEntityFindQueryMikroOrmConverterAsync } from './BaseEntityUpdateCommandToBaseEntityFindQueryMikroOrmConverterAsync';
 
 describe(BaseEntityUpdateCommandToBaseEntityFindQueryMikroOrmConverterAsync.name, () => {
   let baseEntityUpdateOneCommandToBaseEntityFindQueryMikroOrmConverterAsyncMock: Mocked<
@@ -19,7 +18,7 @@ describe(BaseEntityUpdateCommandToBaseEntityFindQueryMikroOrmConverterAsync.name
     ObjectQuery<BaseEntityMikroOrm>[]
   >;
 
-  beforeAll(() => {
+  beforeEach(() => {
     baseEntityUpdateOneCommandToBaseEntityFindQueryMikroOrmConverterAsyncMock = {
       convert: vi.fn(),
     };
@@ -36,7 +35,7 @@ describe(BaseEntityUpdateCommandToBaseEntityFindQueryMikroOrmConverterAsync.name
       let baseEntityFindQueryMikroOrmFixture: ObjectQuery<BaseEntityMikroOrm>[];
       let result: unknown;
 
-      beforeAll(async () => {
+      beforeEach(async () => {
         baseEntityUpdateCommandFixture = {
           commands: [BaseEntityUpdateOneCommandFixtures.any],
         };
@@ -48,12 +47,11 @@ describe(BaseEntityUpdateCommandToBaseEntityFindQueryMikroOrmConverterAsync.name
           );
         }
 
-        result = await baseEntityFindQueryToBaseEntityFindQueryMikroOrmConverterAsync.convert(
-          baseEntityUpdateCommandFixture,
-        );
+        result =
+          await baseEntityFindQueryToBaseEntityFindQueryMikroOrmConverterAsync.convert(baseEntityUpdateCommandFixture);
       });
 
-      afterAll(() => {
+      afterEach(() => {
         vi.clearAllMocks();
       });
 

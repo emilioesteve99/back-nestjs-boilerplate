@@ -1,7 +1,6 @@
 import { Mocked } from 'vitest';
-
-import { CountQueryHandler } from './CountQueryHandler';
 import { ManagerAsync } from '../../domain/manager/ManagerAsync';
+import { CountQueryHandler } from './CountQueryHandler';
 
 interface QueryTest {
   foo: any;
@@ -11,7 +10,7 @@ describe(CountQueryHandler.name, () => {
   let countManagerMock: Mocked<ManagerAsync<QueryTest, number>>;
   let countQueryHandler: CountQueryHandler<QueryTest>;
 
-  beforeAll(() => {
+  beforeEach(() => {
     countManagerMock = {
       manage: vi.fn(),
     };
@@ -25,7 +24,7 @@ describe(CountQueryHandler.name, () => {
       let countFixture: number;
       let result: unknown;
 
-      beforeAll(async () => {
+      beforeEach(async () => {
         queryTestFixture = {
           foo: 'foo',
         };
@@ -36,7 +35,7 @@ describe(CountQueryHandler.name, () => {
         result = await countQueryHandler.execute(queryTestFixture);
       });
 
-      afterAll(() => {
+      afterEach(() => {
         vi.clearAllMocks();
       });
 

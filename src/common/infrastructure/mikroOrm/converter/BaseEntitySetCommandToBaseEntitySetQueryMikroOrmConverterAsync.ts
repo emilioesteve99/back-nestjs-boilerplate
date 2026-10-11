@@ -12,9 +12,8 @@ export abstract class BaseEntitySetCommandToBaseEntitySetQueryMikroOrmConverterA
 > implements ConverterAsync<TInput, TOutput>
 {
   public async convert(input: TInput): Promise<TOutput> {
-    const baseEntitySetQueryMikroOrm: EntityData<BaseEntityMikroOrm> = await this.convertToBaseEntitySetQueryMikroOrm(
-      input,
-    );
+    const baseEntitySetQueryMikroOrm: EntityData<BaseEntityMikroOrm> =
+      await this.convertToBaseEntitySetQueryMikroOrm(input);
 
     const output: TOutput = await this.convertToSpecificEntitySetQueryMikroOrm(input, baseEntitySetQueryMikroOrm);
 

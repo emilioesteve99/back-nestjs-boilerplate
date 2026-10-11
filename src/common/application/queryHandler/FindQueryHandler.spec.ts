@@ -1,7 +1,6 @@
 import { Mocked } from 'vitest';
-
-import { FindQueryHandler } from './FindQueryHandler';
 import { ManagerAsync } from '../../domain/manager/ManagerAsync';
+import { FindQueryHandler } from './FindQueryHandler';
 
 interface QueryTest {
   foo: any;
@@ -15,7 +14,7 @@ describe(FindQueryHandler.name, () => {
   let findManagerMock: Mocked<ManagerAsync<QueryTest, ModelTest[]>>;
   let findQueryHandler: FindQueryHandler<QueryTest, ModelTest>;
 
-  beforeAll(() => {
+  beforeEach(() => {
     findManagerMock = {
       manage: vi.fn(),
     };
@@ -29,7 +28,7 @@ describe(FindQueryHandler.name, () => {
       let modelTestFixtures: ModelTest[];
       let result: unknown;
 
-      beforeAll(async () => {
+      beforeEach(async () => {
         queryTestFixture = {
           foo: 'foo',
         };
@@ -44,7 +43,7 @@ describe(FindQueryHandler.name, () => {
         result = await findQueryHandler.execute(queryTestFixture);
       });
 
-      afterAll(() => {
+      afterEach(() => {
         vi.clearAllMocks();
       });
 
